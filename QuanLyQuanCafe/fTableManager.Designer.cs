@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fTableManager));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.adminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thôngTinTàiKhoảnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +53,7 @@
             this.cbFood = new System.Windows.Forms.ComboBox();
             this.cbCategory = new System.Windows.Forms.ComboBox();
             this.flpTable = new System.Windows.Forms.FlowLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -62,13 +64,14 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.adminToolStripMenuItem,
             this.thôngTinTàiKhoảnToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1048, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1096, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -91,23 +94,23 @@
             // thôngTinCáNhânToolStripMenuItem
             // 
             this.thôngTinCáNhânToolStripMenuItem.Name = "thôngTinCáNhânToolStripMenuItem";
-            this.thôngTinCáNhânToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.thôngTinCáNhânToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.thôngTinCáNhânToolStripMenuItem.Text = "Thông tin cá nhân";
             this.thôngTinCáNhânToolStripMenuItem.Click += new System.EventHandler(this.thôngTinCáNhânToolStripMenuItem_Click);
             // 
             // đăngXuấtToolStripMenuItem
             // 
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             this.đăngXuấtToolStripMenuItem.Click += new System.EventHandler(this.đăngXuấtToolStripMenuItem_Click);
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.lsvBill);
-            this.panel2.Location = new System.Drawing.Point(611, 99);
+            this.panel2.Location = new System.Drawing.Point(23, 134);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(423, 469);
+            this.panel2.Size = new System.Drawing.Size(435, 434);
             this.panel2.TabIndex = 1;
             // 
             // lsvBill
@@ -121,7 +124,7 @@
             this.lsvBill.HideSelection = false;
             this.lsvBill.Location = new System.Drawing.Point(-3, 3);
             this.lsvBill.Name = "lsvBill";
-            this.lsvBill.Size = new System.Drawing.Size(423, 469);
+            this.lsvBill.Size = new System.Drawing.Size(438, 428);
             this.lsvBill.TabIndex = 0;
             this.lsvBill.UseCompatibleStateImageBehavior = false;
             this.lsvBill.View = System.Windows.Forms.View.Details;
@@ -149,25 +152,24 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.txbTotalPrice);
-            this.panel3.Controls.Add(this.cbSwitchTable);
-            this.panel3.Controls.Add(this.btnSwitchTable);
-            this.panel3.Controls.Add(this.nmDisCount);
-            this.panel3.Controls.Add(this.btnDisCount);
             this.panel3.Controls.Add(this.btnCheckOut);
-            this.panel3.Location = new System.Drawing.Point(611, 574);
+            this.panel3.Controls.Add(this.btnDisCount);
+            this.panel3.Controls.Add(this.nmDisCount);
+            this.panel3.Location = new System.Drawing.Point(23, 574);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(423, 65);
+            this.panel3.Size = new System.Drawing.Size(435, 67);
             this.panel3.TabIndex = 0;
             // 
             // txbTotalPrice
             // 
             this.txbTotalPrice.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.txbTotalPrice.ForeColor = System.Drawing.Color.Red;
-            this.txbTotalPrice.Location = new System.Drawing.Point(214, 24);
+            this.txbTotalPrice.Location = new System.Drawing.Point(200, 20);
             this.txbTotalPrice.Name = "txbTotalPrice";
             this.txbTotalPrice.ReadOnly = true;
-            this.txbTotalPrice.Size = new System.Drawing.Size(106, 28);
+            this.txbTotalPrice.Size = new System.Drawing.Size(120, 28);
             this.txbTotalPrice.TabIndex = 7;
             this.txbTotalPrice.Text = "0";
             this.txbTotalPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -175,14 +177,14 @@
             // cbSwitchTable
             // 
             this.cbSwitchTable.FormattingEnabled = true;
-            this.cbSwitchTable.Location = new System.Drawing.Point(3, 38);
+            this.cbSwitchTable.Location = new System.Drawing.Point(105, 68);
             this.cbSwitchTable.Name = "cbSwitchTable";
-            this.cbSwitchTable.Size = new System.Drawing.Size(96, 24);
+            this.cbSwitchTable.Size = new System.Drawing.Size(132, 24);
             this.cbSwitchTable.TabIndex = 4;
             // 
             // btnSwitchTable
             // 
-            this.btnSwitchTable.Location = new System.Drawing.Point(3, 3);
+            this.btnSwitchTable.Location = new System.Drawing.Point(3, 63);
             this.btnSwitchTable.Name = "btnSwitchTable";
             this.btnSwitchTable.Size = new System.Drawing.Size(96, 33);
             this.btnSwitchTable.TabIndex = 6;
@@ -192,7 +194,7 @@
             // 
             // nmDisCount
             // 
-            this.nmDisCount.Location = new System.Drawing.Point(115, 40);
+            this.nmDisCount.Location = new System.Drawing.Point(6, 40);
             this.nmDisCount.Name = "nmDisCount";
             this.nmDisCount.Size = new System.Drawing.Size(93, 22);
             this.nmDisCount.TabIndex = 5;
@@ -200,7 +202,7 @@
             // 
             // btnDisCount
             // 
-            this.btnDisCount.Location = new System.Drawing.Point(115, 3);
+            this.btnDisCount.Location = new System.Drawing.Point(6, 3);
             this.btnDisCount.Name = "btnDisCount";
             this.btnDisCount.Size = new System.Drawing.Size(93, 33);
             this.btnDisCount.TabIndex = 4;
@@ -209,6 +211,7 @@
             // 
             // btnCheckOut
             // 
+            this.btnCheckOut.ForeColor = System.Drawing.Color.Red;
             this.btnCheckOut.Location = new System.Drawing.Point(326, 8);
             this.btnCheckOut.Name = "btnCheckOut";
             this.btnCheckOut.Size = new System.Drawing.Size(94, 54);
@@ -220,12 +223,14 @@
             // panel4
             // 
             this.panel4.Controls.Add(this.mnFoodCount);
+            this.panel4.Controls.Add(this.cbSwitchTable);
             this.panel4.Controls.Add(this.btnAddFood);
+            this.panel4.Controls.Add(this.btnSwitchTable);
             this.panel4.Controls.Add(this.cbFood);
             this.panel4.Controls.Add(this.cbCategory);
-            this.panel4.Location = new System.Drawing.Point(611, 31);
+            this.panel4.Location = new System.Drawing.Point(23, 31);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(423, 65);
+            this.panel4.Size = new System.Drawing.Size(435, 97);
             this.panel4.TabIndex = 2;
             // 
             // mnFoodCount
@@ -247,6 +252,7 @@
             // 
             // btnAddFood
             // 
+            this.btnAddFood.ForeColor = System.Drawing.Color.Red;
             this.btnAddFood.Location = new System.Drawing.Point(267, 3);
             this.btnAddFood.Name = "btnAddFood";
             this.btnAddFood.Size = new System.Drawing.Size(83, 54);
@@ -275,16 +281,28 @@
             // flpTable
             // 
             this.flpTable.AutoScroll = true;
-            this.flpTable.Location = new System.Drawing.Point(12, 31);
+            this.flpTable.Location = new System.Drawing.Point(480, 33);
             this.flpTable.Name = "flpTable";
             this.flpTable.Size = new System.Drawing.Size(596, 608);
             this.flpTable.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(105, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 20);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Tổng tiền:";
             // 
             // fTableManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1048, 651);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(1096, 656);
             this.Controls.Add(this.flpTable);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
@@ -331,5 +349,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.TextBox txbTotalPrice;
+        private System.Windows.Forms.Label label1;
     }
 }

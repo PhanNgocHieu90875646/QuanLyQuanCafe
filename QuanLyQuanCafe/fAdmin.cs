@@ -10,17 +10,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace QuanLyQuanCafe
 {
     public partial class fAdmin : Form
     {
         BindingSource foodlist=new BindingSource();
+        BindingSource acountlist=new BindingSource();
+        public Account loginAccount;
         public fAdmin()
         {
           
             InitializeComponent();
             dtgvFood.DataSource = foodlist;
+            dtgvAccount.DataSource = acountlist;
             LoadDateTimePickerBill();
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
             LoadListFood();
@@ -30,10 +34,22 @@ namespace QuanLyQuanCafe
             LoadListTable();
             AddCategoryBinding();
             AddTableBinding();
+            AddAcountBinding();
+            LoadAcount();
             LoadTableStatus();
+
         }
         #region methods
-      
+        void AddAcountBinding()
+        {
+            txbUseName.DataBindings.Add(new Binding("Text", dtgvAccount.DataSource, "UseName", true, DataSourceUpdateMode.Never));
+            txbDisplayName.DataBindings.Add(new Binding("Text", dtgvAccount.DataSource, "DisplayName", true, DataSourceUpdateMode.Never));
+            numericUpDown1.DataBindings.Add(new Binding("Value", dtgvAccount.DataSource, "Type", true, DataSourceUpdateMode.Never));
+        }
+        void LoadAcount()
+        {
+            acountlist.DataSource = AccountDAO.Instance.GetListAcount();
+        }
         List<Food> SearchFoodByName(string name)
         {
             List<Food> listfood =FoodDAO.Instance.SearchFoodByName(name);
@@ -66,6 +82,7 @@ namespace QuanLyQuanCafe
             txbTableId.DataBindings.Add(new Binding("Text", dtgvTable.DataSource, "id", true, DataSourceUpdateMode.Never));
             txbTableName.DataBindings.Add(new Binding("Text", dtgvTable.DataSource, "name", true, DataSourceUpdateMode.Never));
             cbTableStatus.DataBindings.Add(new Binding("Text", dtgvTable.DataSource, "status", true, DataSourceUpdateMode.Never));
+
         }
         private void LoadTableStatus()
         {
@@ -90,11 +107,84 @@ namespace QuanLyQuanCafe
         {
             dtgvTable.DataSource = TableDAO.Instance.LoadTableList();
         }
+        void AddAccount(string userName, string displayName, int type)
+        {
+            if (AccountDAO.Instance.IsAccountExist(userName))
+            {
+                MessageBox.Show("Tên tài khoản đã tồn tại, vui lòng chọn tên khác!");
+                return;
+            }
+
+            if (AccountDAO.Instance.InsertAcount(userName, displayName, type))
+            {
+                MessageBox.Show("Thêm tài khoản thành công!");
+            }
+            else
+            {
+                MessageBox.Show("Thêm tài khoản thất bại!");
+            }
+
+            LoadAcount();
+        }
+
+        void EditAccount(string userName, string displayName, int type)
+        {
+            if (AccountDAO.Instance.UpdateAcountt(userName, displayName, type))
+            {
+                MessageBox.Show("Cập nhập khoản thành công!");
+
+                //if (insertAccount != null)
+                //    insertAccount(this, new EventArgs());
+            }
+            else
+            {
+                MessageBox.Show("Cập nhập khoản thất bại");
+            }
+            LoadAcount();
+        }
+        void DeleteAccount(string userName)
+        {
+            if (loginAccount.UseName.Equals(userName))
+            {
+                MessageBox.Show("Không thể xóa tài khoản đang đăng nhập!");
+                return;
+            }
+            {
+
+            }
+            if (AccountDAO.Instance.DeleteAcount(userName))
+            {
+                MessageBox.Show("Xóa tài khoản thành công!");
+
+                //if (insertAccount != null)
+                //    insertAccount(this, new EventArgs());
+            }
+            else
+            {
+                MessageBox.Show("Xóa tài khoản thất bại");
+            }
+            LoadAcount();
+        }
+        void resetPass(string userName)
+        {
+            if (AccountDAO.Instance.ResetAccount(userName))
+            {
+                MessageBox.Show("Đặt lại mật khẩu thành công");
+
+                //if (insertAccount != null)
+                //    insertAccount(this, new EventArgs());
+            }
+            else
+            {
+                MessageBox.Show("Đặt lại mật khẩu thất bại");
+            }
+        }
         #endregion
         #region events
         private void btnViewBill_Click(object sender, EventArgs e)
         {
             LoadListBillByDate(dtpkFromDate.Value,dtpkToDate.Value);
+            TinhTongDoanhThu();
         }
         private void fAdmin_Load(object sender, EventArgs e)
         {
@@ -240,7 +330,7 @@ namespace QuanLyQuanCafe
                 }
             }
         }
-
+      
         private void btnShowCategory_Click(object sender, EventArgs e)
         {
             LoadListCategory();
@@ -328,6 +418,183 @@ namespace QuanLyQuanCafe
         {
             add { updateCategory += value; }
             remove { updateCategory -= value; }
+        }
+
+        private void btnAddTable_Click(object sender, EventArgs e)
+        {
+            string name = txbTableName.Text;
+            if (TableDAO.Instance.InsertTable(name))
+            {
+                MessageBox.Show("Thêm bàn thành công!");
+                LoadListTable();
+                if (insertTable != null)
+                    insertTable(this, new EventArgs());
+            }
+            else
+            {
+                MessageBox.Show("Thêm bàn thất bại!");
+            }
+        }
+
+        private void btnEditTable_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btnDeleteTable_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(txbTableId.Text);
+
+            if (TableDAO.Instance.DeleteTable(id))
+            {
+                MessageBox.Show("Xoá bàn thành công!");
+                LoadListTable();
+                if (deleteTable != null)
+                    deleteTable(this, new EventArgs());
+            }
+            else
+            {
+                MessageBox.Show("Xoá bàn thất bại!");
+            }
+        }
+
+        private void dtgvTable_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dtgvTable.CurrentRow != null)
+            {
+                txbTableId.Text = dtgvTable.CurrentRow.Cells["ID"].Value.ToString();
+                txbTableName.Text = dtgvTable.CurrentRow.Cells["Name"].Value.ToString();
+               
+            }
+        }
+        private event EventHandler insertTable;
+        public event EventHandler InsertTable
+        {
+            add { insertTable += value; }
+            remove { insertTable -= value; }
+        }
+        private event EventHandler deleteTable;
+        public event EventHandler DeleteTable
+        {
+            add { deleteTable += value; }
+            remove { deleteTable -= value; }
+        }
+        private event EventHandler updateTable;
+        public event EventHandler UpdateTable
+        {
+            add { updateTable += value; }
+            remove { updateTable -= value; }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(txbTableId.Text);
+            string name = txbTableName.Text;
+            
+
+            if (TableDAO.Instance.UpdateTable(id, name))
+            {
+                MessageBox.Show("Cập nhật bàn thành công!");
+                LoadListTable();
+                if (updateTable != null)
+                    updateTable(this, new EventArgs());
+            }
+            else
+            {
+                MessageBox.Show("Cập nhật bàn thất bại!");
+            }
+
+        }
+
+        private void btnShowAccount_Click(object sender, EventArgs e)
+        {
+            LoadAcount();
+        }
+
+        private void btnAddAccount_Click(object sender, EventArgs e)
+        {
+            string usename= txbUseName.Text;
+            string displayName = txbDisplayName.Text;
+            int type = (int)numericUpDown1.Value;
+            AddAccount(usename, displayName, type);
+        }
+
+        private void btnDeleteAccount_Click(object sender, EventArgs e)
+        {
+        
+            string usename = txbUseName.Text;
+            DeleteAccount(usename);
+        }
+
+        private void btnEditAccount_Click(object sender, EventArgs e)
+        {
+            string usename = txbUseName.Text;
+            string displayName = txbDisplayName.Text;
+            int type = (int)numericUpDown1.Value;
+            EditAccount(usename, displayName, type);
+        }
+
+        private void btnResetPassWord_Click(object sender, EventArgs e)
+        {
+            string usename = txbUseName.Text;
+            resetPass(usename);
+        }
+        private void TinhTongDoanhThu()
+        {
+            decimal tongDoanhThu = 0;
+
+            foreach (DataGridViewRow row in dtgvBill.Rows)
+            {
+                // Bỏ qua hàng cuối cùng (hàng trống để nhập thêm)
+                if (row.IsNewRow)
+                    continue;
+
+                // Lấy giá trị từ cột "Tổng tiền"
+                object cellValue = row.Cells["Tổng tiền"].Value;
+
+                if (cellValue != null && decimal.TryParse(cellValue.ToString(), out decimal tien))
+                {
+                    tongDoanhThu += tien;
+                }
+            }
+
+            // Hiển thị ra label
+            lblTotalRevenue.Text = tongDoanhThu.ToString("N0") + " VNĐ";
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbTableStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //if (dtgvTable.SelectedCells.Count > 0)
+            //{
+            //    int index = dtgvTable.SelectedCells[0].RowIndex;
+            //    DataGridViewRow selectedRow = dtgvTable.Rows[index];
+            //    selectedRow.Cells["status"].Value = cbTableStatus.SelectedItem.ToString();
+            //    int id = Convert.ToInt32(selectedRow.Cells["ID"].Value);
+            //    string status = cbTableStatus.SelectedItem.ToString();
+            //    if (TableDAO.Instance.UpdateTableStatus(id, status))
+            //    {
+            //        MessageBox.Show("Cập nhật trạng thái bàn thành công!");
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Cập nhật trạng thái bàn thất bại!");
+            //    }
+            //}
+        }
+
+        private void panel22_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

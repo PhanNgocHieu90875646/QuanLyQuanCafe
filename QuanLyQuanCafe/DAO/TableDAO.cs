@@ -36,5 +36,52 @@ namespace QuanLyQuanCafe.DAO
             }
             return tableList;
         }
+        public bool InsertTable(string name)
+        {
+            string query = $"INSERT INTO ThucAnTrenBan (name, status) VALUES (N'{name}', N'Trống')";
+            return DataProvider.Instance.ExecuteNonQuery(query) > 0;
+        }
+
+        public bool UpdateTable(int id, string name )
+        {
+            string query = $"UPDATE ThucAnTrenBan SET name = N'{name}' WHERE id = {id}";
+            return DataProvider.Instance.ExecuteNonQuery(query) > 0;
+        }
+
+        public bool DeleteTable(int id)
+        {
+            // Xoá thông tin hóa đơn liên quan nếu cần
+            string query = $"DELETE FROM ThucAnTrenBan WHERE id = {id}";
+            return DataProvider.Instance.ExecuteNonQuery(query) > 0;
+        }
+        public List<Table> GetTableListByCategoryID(int categoryId)
+        {
+            List<Table> list = new List<Table>();
+            string query = "SELECT * FROM ThucAnTrenBan WHERE CategoryID = @id";
+            DataTable data = DataProvider.Instance.ExecuteQuery(query, new object[] { categoryId });
+
+            foreach (DataRow row in data.Rows)
+            {
+                Table table = new Table(row);
+                list.Add(table);
+            }
+
+            return list;
+        }
+
+        internal bool UpdateTableStatus(int id, string status)
+        {
+            string query = string.Format("update dbo.ThucAnTrenBan set status = N'{0}' where id = {1}", status, id);
+            int result = DataProvider.Instance.ExecuteNonQuery(query);
+            return result > 0;
+        }
+
+        internal bool UpdateTable(int id, string name, string status)
+        {
+      
+            string query = string.Format("update dbo.ThucAnTrenBan set name = N'{0}', status = N'{1}' where id = {2}", name, status, id);
+                int result = DataProvider.Instance.ExecuteNonQuery(query);
+                return result > 0;
+        }
     }
 }

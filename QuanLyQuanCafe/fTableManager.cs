@@ -48,6 +48,42 @@ namespace QuanLyQuanCafe
             cbFood.DataSource = listFood;
             cbFood.DisplayMember = "Name";
         }
+        void LoadCategoryListByCategoryID(int id)
+        {
+            Category category = CategoryDAO.Instance.GetCategoryByID(id);
+            cbCategory.DataSource = new List<Category> { category };
+            cbCategory.DisplayMember = "Name";
+        }
+        void LoadTableListByCategoryID(int id)
+        {
+            List<Table> tableList = TableDAO.Instance.GetTableListByCategoryID(id);
+            flpTable.Controls.Clear(); // Xóa các control cũ
+
+            foreach (Table item in tableList)
+            {
+                Button btn = new Button()
+                {
+                    Width = TableDAO.TableWidth,
+                    Height = TableDAO.TableHeight,
+                    Text = item.Name + Environment.NewLine + item.Status,
+                    Tag = item
+                };
+
+                btn.Click += btn_Click;
+
+                switch (item.Status)
+                {
+                    case "Trống":
+                        btn.BackColor = Color.Aqua;
+                        break;
+                    default:
+                        btn.BackColor = Color.Red;
+                        break;
+                }
+
+                flpTable.Controls.Add(btn); // Thêm Button vào FlowLayoutPanel
+            }
+        }
 
         void LoadTable()
         {
@@ -144,11 +180,78 @@ namespace QuanLyQuanCafe
         private void adminToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fAdmin f = new fAdmin();
+            f.loginAccount = LoginAccount;
             f.InsertFood += f_InsertFood;
             f.UpdateFood += f_UpdateFood;
             f.DeleteFood += f_DeleteFood;
+
+            f.InsertCategory += f_InsertCategory;
+            f.UpdateCategory += f_UpdateCategory;
+            f.DeleteCategory += f_DeleteCategory;
+
+            f.InsertTable += f_InsertTable;
+            f.UpdateTable += f_UpdateTable;
+            f.DeleteTable += f_DeleteTable;
             f.ShowDialog();
         }
+
+        private void f_DeleteTable(object sender, EventArgs e)
+        {
+            LoadCategoryListByCategoryID((cbCategory.SelectedItem as Category).ID);
+
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as Table).ID);
+            }
+
+            LoadTable();
+        }
+
+        private void f_UpdateTable(object sender, EventArgs e)
+        {
+            LoadCategoryListByCategoryID((cbCategory.SelectedItem as Category).ID);
+
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as Table).ID);
+            }
+
+            LoadTable();
+        }
+
+        private void f_InsertTable(object sender, EventArgs e)
+        {
+            LoadCategoryListByCategoryID((cbCategory.SelectedItem as Category).ID);
+
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as Table).ID);
+            }
+
+            LoadTable();
+        }
+
+        private void f_DeleteCategory(object sender, EventArgs e)
+        {
+            LoadCategoryListByCategoryID((cbCategory.SelectedItem as Category).ID);
+            if (lsvBill.Tag != null)
+                ShowBill((lsvBill.Tag as Table).ID);
+        }
+
+        private void f_UpdateCategory(object sender, EventArgs e)
+        {
+            LoadCategoryListByCategoryID((cbCategory.SelectedItem as Category).ID);
+            if (lsvBill.Tag != null)
+                ShowBill((lsvBill.Tag as Table).ID);
+        }
+
+        private void f_InsertCategory(object sender, EventArgs e)
+        {
+            LoadCategoryListByCategoryID((cbCategory.SelectedItem as Category).ID);
+            if (lsvBill.Tag != null)
+                ShowBill((lsvBill.Tag as Table).ID);
+        }
+
         private void cbCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             int id = 0;
@@ -219,7 +322,7 @@ namespace QuanLyQuanCafe
             }
 
         }
-
+       
         #endregion
     }
 }
