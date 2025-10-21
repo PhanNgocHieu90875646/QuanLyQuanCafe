@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace QuanLyQuanCafe.DAO
@@ -41,20 +43,46 @@ namespace QuanLyQuanCafe.DAO
         }
            public DataTable GetListAcount()
             {
-                return DataProvider.Instance.ExecuteQuery("select UseName,DisplayName,Type from TaiKhoan");
+                return DataProvider.Instance.ExecuteQuery("SELECT UseName, DisplayName, Type, IdNhanVien FROM TaiKhoan");
             }
-        public bool InsertAcount(string name, string displayName, int type)
+        public bool InsertAccount(string userName, string displayName, int type, int idNhanVien)
         {
-            string query = string.Format("insert dbo.TaiKhoan(UseName,DisplayName,Type) values(N'{0}', N'{1}', N'{2}')", name, displayName, type);
-            int result = DataProvider.Instance.ExecuteNonQuery(query);
+            string query = "INSERT INTO TaiKhoan(UseName, DisplayName, Type, IdNhanVien) VALUES ( @userName , @displayName , @type , @idNhanVien )";
+            int result = DataProvider.Instance.ExecuteNonQuery(query, new object[] { userName, displayName, type, idNhanVien });
             return result > 0;
         }
-        public bool UpdateAcountt( string userName, string displayName, int type)
+
+        // Sửa tài khoản
+        public bool UpdateAccount(string userName, string displayName,  int type, int idNhanVien)
         {
-            string query = string.Format("update dbo.TaiKhoan set DisplayName = N'{1}', Type = {2} where UseName = N'{0}'", userName, displayName, type);
-            int result = DataProvider.Instance.ExecuteNonQuery(query);
-            return result > 0;
+            try
+            {
+                string query = "UPDATE TaiKhoan SET DisplayName = @displayName , Type = @type , IdNhanVien = @idNhanVien WHERE UseName = @userName";
+                int result = DataProvider.Instance.ExecuteNonQuery(query, new object[] { displayName, type, idNhanVien, userName });
+
+                return result > 0;
+            }
+            catch (SqlException ex)
+            {
+                // 🔴 Nếu lỗi là do khóa ngoại FK_TaiKhoan_NhanVien
+                if (ex.Message.Contains("FK_TaiKhoan_NhanVien"))
+                {
+                    MessageBox.Show("Id nhân viên không tồn tại trong bảng Nhân viên!", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi SQL: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Đã xảy ra lỗi: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
+
         public bool DeleteAcount(string name)
         {
             string query = string.Format("delete TaiKhoan where UseName = N'{0}'", name);

@@ -9,18 +9,28 @@ namespace QuanLyQuanCafe.DTO
 {
     public class BillInfo
     {
-        public BillInfo(int id, int billID, int foodID, int count) { 
+        public BillInfo(int id, int billID, int foodID, int count,double dongia, string tenmon,double thanhtien) { 
              this.ID = id;
             this.BillID = billID;
             this.FoddID = foodID;
             this.Count = count;
+            this.DonGia = dongia;
+            this.TenMon = tenmon;
+            this.ThanhTien = thanhtien;
         }
+        public BillInfo() { }
         public BillInfo(DataRow row)
         {
             this.ID = (int)row["id"];
-            this.BillID = (int)row["idBill"];
-            this.FoddID = (int)row["idFood"];
-            this.Count = (int)row["count"];
+            this.BillID = (int)row["idHoadon"];
+            this.FoddID = (int)row["idMon"];
+            this.Count = (int)row["SoLuong"];
+            if (row.Table.Columns.Contains("DonGia"))
+                this.DonGia = float.Parse(row["DonGia"].ToString());
+            if (row.Table.Columns.Contains("TenMon"))
+                this.TenMon = row["TenMon"].ToString();
+            if (row.Table.Columns.Contains("ThanhTien"))
+                ThanhTien = Convert.ToDouble(row["ThanhTien"]);
         }
         private int count;
         public int Count
@@ -46,5 +56,8 @@ namespace QuanLyQuanCafe.DTO
             get { return iD; }
             set { iD = value; }
         }
+        public double DonGia { get; set; }
+        public string TenMon { get; set; }
+        public double ThanhTien { get; set; }
     }
 }

@@ -21,12 +21,15 @@ namespace QuanLyQuanCafe
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string userName=txbUseName.Text;
-            string passWord=txbPassWord.Text;
-            if (Login(userName,passWord))
+            string userName = txbUseName.Text;
+            string passWord = txbPassWord.Text;
+
+            if (AccountDAO.Instance.Login(userName, passWord))
             {
-                Account loginAcount=AccountDAO.Instance.GetAccountByUseName(userName);
-                fTableManager f = new fTableManager(loginAcount);
+                Account loginAccount = AccountDAO.Instance.GetAccountByUseName(userName);
+                NhanVien currentStaff = NhanVienDAO.Instance.GetStaffByAccount(userName);
+
+                fTableManager f = new fTableManager(loginAccount, currentStaff);
                 this.Hide();
                 f.ShowDialog();
                 this.Show();

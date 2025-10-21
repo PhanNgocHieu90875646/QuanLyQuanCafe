@@ -9,12 +9,13 @@ namespace QuanLyQuanCafe.DTO
 {
     public class Account
     {
-        public Account(string useName, string displayName ,int type, string password = null)
+        public Account(string useName, string displayName ,int type, int idNhanVien, string password = null)
         {
             this.UseName = useName;
             this.DisplayName = displayName;
             this.Password = password;
             this.Type = type;
+            IdNhanVien = idNhanVien;
         }
         public Account(DataRow row)
         {
@@ -22,6 +23,14 @@ namespace QuanLyQuanCafe.DTO
             this.DisplayName = row["displayName"].ToString();           
             this.Type = (int)row["type"];
             this.Password = row["password"].ToString();
+            if (row.Table.Columns.Contains("IdNhanVien") && row["IdNhanVien"] != DBNull.Value)
+            {
+                this.IdNhanVien = Convert.ToInt32(row["IdNhanVien"]);
+            }
+            else
+            {
+                this.IdNhanVien = 0;
+            }
         }
         private int type;
         public int Type
@@ -47,5 +56,6 @@ namespace QuanLyQuanCafe.DTO
             get { return useName; }
             set { useName = value; }
         }
+        public int IdNhanVien { get; set; }
     }
 }

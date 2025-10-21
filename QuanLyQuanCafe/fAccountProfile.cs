@@ -70,6 +70,11 @@ namespace QuanLyQuanCafe
         {
             UpdateAccountInfo();
         }
+
+        private void txbDisplayName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
     public class AccountEvent : EventArgs
     {

@@ -95,6 +95,7 @@
             this.txbDisplayName.Name = "txbDisplayName";
             this.txbDisplayName.Size = new System.Drawing.Size(377, 22);
             this.txbDisplayName.TabIndex = 1;
+            this.txbDisplayName.TextChanged += new System.EventHandler(this.txbDisplayName_TextChanged);
             // 
             // panel1
             // 
