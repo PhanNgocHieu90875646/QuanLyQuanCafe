@@ -33,9 +33,9 @@ namespace QuanLyQuanCafe.DAO
         public int GetUnCheckBillIdByTableId(int id)
         {
             DataTable data = DataProvider.Instance.ExecuteQuery("select *from dbo.HoaDon where inttable= " + id + " and status = 0");
-            if(data.Rows.Count > 0)
+            if (data.Rows.Count > 0)
             {
-                Bill bill =new Bill(data.Rows[0]);
+                Bill bill = new Bill(data.Rows[0]);
                 return bill.ID;
             }
             return -1;
@@ -48,7 +48,7 @@ namespace QuanLyQuanCafe.DAO
         }
         public void InsertBill(int id)
         {
-            DataProvider.Instance.ExecuteNonQuery("exec USP_InsertBill @inttable", new object[]{id});
+            DataProvider.Instance.ExecuteNonQuery("exec USP_InsertBill @inttable", new object[] { id });
         }
 
 
@@ -76,9 +76,9 @@ namespace QuanLyQuanCafe.DAO
         {
             try
             {
-               return  (int)DataProvider.Instance.ExecuteScalar("select max(id) from dbo.HoaDon");
+                return (int)DataProvider.Instance.ExecuteScalar("select max(id) from dbo.HoaDon");
             }
-            catch 
+            catch
             {
 
                 return 1;
@@ -107,7 +107,7 @@ namespace QuanLyQuanCafe.DAO
             return result > 0;
         }
 
-    
+
 
         public List<Bill> GetAllBills()
         {

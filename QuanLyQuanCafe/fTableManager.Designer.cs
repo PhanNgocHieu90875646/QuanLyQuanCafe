@@ -54,6 +54,8 @@
             this.cbFood = new System.Windows.Forms.ComboBox();
             this.cbCategory = new System.Windows.Forms.ComboBox();
             this.flpTable = new System.Windows.Forms.FlowLayoutPanel();
+            this.cbSize = new System.Windows.Forms.ComboBox();
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -119,7 +121,8 @@
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
-            this.columnHeader4});
+            this.columnHeader4,
+            this.columnHeader5});
             this.lsvBill.GridLines = true;
             this.lsvBill.HideSelection = false;
             this.lsvBill.Location = new System.Drawing.Point(3, 3);
@@ -219,7 +222,7 @@
             this.cbSwitchTable.FormattingEnabled = true;
             this.cbSwitchTable.Location = new System.Drawing.Point(105, 68);
             this.cbSwitchTable.Name = "cbSwitchTable";
-            this.cbSwitchTable.Size = new System.Drawing.Size(132, 24);
+            this.cbSwitchTable.Size = new System.Drawing.Size(68, 24);
             this.cbSwitchTable.TabIndex = 4;
             // 
             // btnSwitchTable
@@ -234,6 +237,7 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.cbSize);
             this.panel4.Controls.Add(this.mnFoodCount);
             this.panel4.Controls.Add(this.cbSwitchTable);
             this.panel4.Controls.Add(this.panel3);
@@ -281,6 +285,7 @@
             this.cbFood.Name = "cbFood";
             this.cbFood.Size = new System.Drawing.Size(258, 24);
             this.cbFood.TabIndex = 1;
+            this.cbFood.SelectedIndexChanged += new System.EventHandler(this.cbFood_SelectedIndexChanged);
             // 
             // cbCategory
             // 
@@ -299,6 +304,18 @@
             this.flpTable.Size = new System.Drawing.Size(741, 423);
             this.flpTable.TabIndex = 3;
             this.flpTable.Paint += new System.Windows.Forms.PaintEventHandler(this.flpTable_Paint);
+            // 
+            // cbSize
+            // 
+            this.cbSize.FormattingEnabled = true;
+            this.cbSize.Location = new System.Drawing.Point(179, 68);
+            this.cbSize.Name = "cbSize";
+            this.cbSize.Size = new System.Drawing.Size(68, 24);
+            this.cbSize.TabIndex = 7;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Size";
             // 
             // fTableManager
             // 
@@ -353,5 +370,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.TextBox txbTotalPrice;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbSize;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
     }
 }

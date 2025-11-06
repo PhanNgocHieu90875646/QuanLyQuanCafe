@@ -21,7 +21,7 @@ namespace QuanLyQuanCafe.DAO
         private BillInfoDAO() { }
         public void DeleteBillInfoByIdFood(int id)
         {
-            DataProvider.Instance.ExecuteQuery("delete dbo.ThongTinHoaDon where idFood = " +id);
+            DataProvider.Instance.ExecuteQuery("delete dbo.ThongTinHoaDon where idFood = " + id);
         }
         public List<BillInfo> GetListBillInfo(int id)
         {
@@ -36,16 +36,19 @@ namespace QuanLyQuanCafe.DAO
             }
             return listBI;
         }
-        public void InsertBillInfo(int idBill,int idFood, int count)
+        public void InsertBillInfo(int idBill, int idFood, int count, int idSizeMonAn, float donGia)
         {
-            DataProvider.Instance.ExecuteNonQuery("USP_InsertBillInfo @idBill , @idFood , @count", new object[] { idBill, idFood, count });
+            DataProvider.Instance.ExecuteNonQuery(
+                "USP_InsertBillInfo @idBill , @idFood , @count , @donGia , @idSizeMonAn",
+                new object[] { idBill, idFood, count, donGia, idSizeMonAn });
         }
-        public bool InsertBillInfo(int idBill, int idFood, int count, double donGia)
-        {
-            string query = "INSERT INTO ThongTinHoaDon (idBill, idFood, count, DonGia) VALUES (@idBill, @idFood, @count, @donGia)";
-            int result = DataProvider.Instance.ExecuteNonQuery(query, new object[] { idBill, idFood, count, donGia });
-            return result > 0;
-        }
+
+        //public bool InsertBillInfo(int idBill, int idFood, int count, double donGia)
+        //{
+        //    string query = "INSERT INTO ThongTinHoaDon (idBill, idFood, count, DonGia) VALUES (@idBill, @idFood, @count, @donGia)";
+        //    int result = DataProvider.Instance.ExecuteNonQuery(query, new object[] { idBill, idFood, count, donGia });
+        //    return result > 0;
+        //}
 
         public List<BillInfo> GetBillInfoByBillId(int idBill)
         {

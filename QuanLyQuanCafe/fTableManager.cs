@@ -29,13 +29,14 @@ namespace QuanLyQuanCafe
             this.currentAccount = acc;
             this.currentStaff = staff;
             this.LoginAccount = acc;
-
+           
             LoadTable();
             LoadCategory();
             LoadComboboxTable(cbSwitchTable);
         }
 
         #region Method
+    
         void ChangeAcount(int type)
         {
             adminToolStripMenuItem.Enabled=type==1;
@@ -120,11 +121,12 @@ namespace QuanLyQuanCafe
             float totalPrice = 0;
             foreach (DTO.Menu item in listBillInfo)
             {
-                ListViewItem lsvitem= new ListViewItem(item.FoodName.ToString());
-                lsvitem.SubItems.Add(item.Count.ToString());
-                lsvitem.SubItems.Add(item.Price.ToString());
-                lsvitem.SubItems.Add(item.TotalPrice.ToString());
-                totalPrice += item.TotalPrice;
+                ListViewItem lsvitem= new ListViewItem(item.TenMon.ToString());            
+                lsvitem.SubItems.Add(item.SoLuong.ToString());
+                lsvitem.SubItems.Add(item.DonGia.ToString());
+                lsvitem.SubItems.Add(item.ThanhTien.ToString());
+                lsvitem.SubItems.Add(item.SizeMon);
+                totalPrice += item.ThanhTien;
                 lsvBill.Items.Add(lsvitem);
             }
             txbTotalPrice.Text = totalPrice.ToString("c");
@@ -271,47 +273,107 @@ namespace QuanLyQuanCafe
 
         private void btnAddFood_Click(object sender, EventArgs e)
         {
+            //Table table = lsvBill.Tag as Table;
+
+            //if (table == null)
+            //{
+            //    MessageBox.Show("Hãy chọn bàn!"); return;
+            //}
+
+            //if (cbFood.SelectedItem == null)
+            //{
+            //    MessageBox.Show("Món ăn không tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            ////if (cbSize.SelectedItem == null)
+            ////{
+            ////    MessageBox.Show("Vui lòng chọn size món!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            ////    return;
+            ////}
+
+            //int idBill = BillDAO.Instance.GetUnCheckBillIdByTableId(table.ID);
+            //int foodID = (cbFood.SelectedItem as Food).ID; int count = (int)mnFoodCount.Value;
+            //int currentStock = FoodDAO.Instance.GetFoodStock(foodID);
+
+            //if (count > currentStock)
+            //{
+            //    MessageBox.Show("Số lượng bạn chọn vượt quá số lượng tồn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+
+            //if (idBill == -1)
+            //{
+            //    BillDAO.Instance.InsertBill(table.ID);
+            //    BillInfoDAO.Instance.InsertBillInfo(BillDAO.Instance.GetMaxIDBill(), foodID, count);
+            //}
+            //else   float donGia = (float)selectedSize.Gia;
+            //{
+            //    BillInfoDAO.Instance.InsertBillInfo(idBill, foodID, count);
+            //}
+
+            //FoodDAO.Instance.UpdateFoodStock(foodID, currentStock - count);
+            //ShowBill(table.ID); LoadTable();
             Table table = lsvBill.Tag as Table;
             if (table == null)
             {
                 MessageBox.Show("Hãy chọn bàn!");
                 return;
             }
+
             if (cbFood.SelectedItem == null)
             {
                 MessageBox.Show("Món ăn không tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            if (cbSize.SelectedItem == null)
+            {
+                MessageBox.Show("Vui lòng chọn size món!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             int idBill = BillDAO.Instance.GetUnCheckBillIdByTableId(table.ID);
             int foodID = (cbFood.SelectedItem as Food).ID;
             int count = (int)mnFoodCount.Value;
 
-            // 🔎 Lấy số lượng tồn kho từ DB
-            int currentStock = FoodDAO.Instance.GetFoodStock(foodID);
+            // Lấy size được chọn
+            var selectedSize = cbSize.SelectedItem as SizeMonAn;
+            if (selectedSize == null)
+            {
+                MessageBox.Show("Không tìm thấy size món trong cơ sở dữ liệu!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
+            // Tính đơn giá (giá món + giá size)
+            float giaMon = (cbFood.SelectedItem as Food).Price;
+            float giaSize = (float)selectedSize.Gia;
+            float donGia = (float)giaMon + giaSize;
+
+            int idSizeMonAn = selectedSize.Id;
+
+            int currentStock = FoodDAO.Instance.GetFoodStock(foodID);
             if (count > currentStock)
             {
                 MessageBox.Show("Số lượng bạn chọn vượt quá số lượng tồn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; // ❌ Không cho thêm
+                return;
             }
 
             if (idBill == -1)
             {
                 BillDAO.Instance.InsertBill(table.ID);
-                BillInfoDAO.Instance.InsertBillInfo(BillDAO.Instance.GetMaxIDBill(), foodID, count);
+                idBill = BillDAO.Instance.GetMaxIDBill();
             }
-            else
-            {
-                BillInfoDAO.Instance.InsertBillInfo(idBill, foodID, count);
-            }
-            // ✅ Giảm số lượng tồn trong DB
+
+            // Thêm món vào bill với đúng size + giá size
+            BillInfoDAO.Instance.InsertBillInfo(idBill, foodID, count, idSizeMonAn, donGia);
+
             FoodDAO.Instance.UpdateFoodStock(foodID, currentStock - count);
 
             ShowBill(table.ID);
             LoadTable();
-           
+
         }
-      
+
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
             Table table = lsvBill.Tag as Table;
@@ -377,6 +439,25 @@ namespace QuanLyQuanCafe
         }
 
         private void nmDisCount_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbFood_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cb = sender as ComboBox;
+            if (cb.SelectedItem == null) return;
+
+            Food selected = cb.SelectedItem as Food;
+            int idFood = selected.ID;
+
+            //Load size cho món này
+            cbSize.DataSource = SizeMonAnDAO.Instance.GetListSizeByFoodId(idFood);
+            cbSize.DisplayMember = "Size";
+
+        }
+
+        private void cbSize_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

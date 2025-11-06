@@ -17,12 +17,12 @@ namespace QuanLyQuanCafe
 {
     public partial class fAdmin : Form
     {
-        BindingSource foodlist=new BindingSource();
-        BindingSource acountlist=new BindingSource();
+        BindingSource foodlist = new BindingSource();
+        BindingSource acountlist = new BindingSource();
         public Account loginAccount;
         public fAdmin()
         {
-          
+
             InitializeComponent();
             LoadDateTimePickerBill();
             this.txbImagePath.TextChanged += txbImagePath_TextChanged;
@@ -30,7 +30,7 @@ namespace QuanLyQuanCafe
             dtgvAccount.DataSource = acountlist;
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
             LoadListBillByDateHD(dtpkFromDate.Value, dtpkToDate.Value);
-          
+
             LoadListFood();
             LoadCategoryIntoCombobox(cbFoodCategory);
             AddFoodBinding();
@@ -53,7 +53,7 @@ namespace QuanLyQuanCafe
         {
             dtgvNV.DataSource = NhanVienDAO.Instance.GetListNhanVien();
         }
-     
+
         void AddAcountBinding()
         {
             txbUseName.DataBindings.Clear();
@@ -77,14 +77,14 @@ namespace QuanLyQuanCafe
             cbNhanVien.DisplayMember = "HoTen";
             cbNhanVien.ValueMember = "Id";
         }
-       
+
         void LoadAcount()
         {
             acountlist.DataSource = AccountDAO.Instance.GetListAcount();
         }
         List<Food> SearchFoodByName(string name)
         {
-            List<Food> listfood =FoodDAO.Instance.SearchFoodByName(name);
+            List<Food> listfood = FoodDAO.Instance.SearchFoodByName(name);
             return listfood;
         }
         void LoadDateTimePickerBill()
@@ -98,13 +98,13 @@ namespace QuanLyQuanCafe
         }
         void LoadListBillByDate(DateTime checkIn, DateTime checkOut)
         {
-            dtgvBill.DataSource= BillDAO.Instance.GetListBillByDateHD(checkIn,checkOut);
-     
+            dtgvBill.DataSource = BillDAO.Instance.GetListBillByDateHD(checkIn, checkOut);
+
         }
         void LoadListBillByDateHD(DateTime checkIn, DateTime checkOut)
         {
 
-            dtgvBill.DataSource= BillDAO.Instance.GetListBillByDateHD(checkIn,checkOut);
+            dtgvBill.DataSource = BillDAO.Instance.GetListBillByDateHD(checkIn, checkOut);
 
         }
         void AddNhanVienBinding()
@@ -192,17 +192,17 @@ namespace QuanLyQuanCafe
         }
         void LoadListFood()
         {
-            foodlist .DataSource= FoodDAO.Instance.GetListFood();
+            foodlist.DataSource = FoodDAO.Instance.GetListFood();
         }
         void LoadListCategory()
         {
-           dtgvCategory.DataSource = CategoryDAO.Instance.GetListCategory();
+            dtgvCategory.DataSource = CategoryDAO.Instance.GetListCategory();
         }
         void LoadListTable()
         {
             dtgvTable.DataSource = TableDAO.Instance.LoadTableList();
         }
-        void AddAccount(string userName, string displayName, int type,int idNhanVien)
+        void AddAccount(string userName, string displayName, int type, int idNhanVien)
         {
             if (AccountDAO.Instance.IsAccountExist(userName))
             {
@@ -221,7 +221,7 @@ namespace QuanLyQuanCafe
 
             LoadAcount();
         }
-        
+
         void DeleteAccount(string userName)
         {
             if (loginAccount.UseName.Equals(userName))
@@ -259,7 +259,7 @@ namespace QuanLyQuanCafe
                 MessageBox.Show("Đặt lại mật khẩu thất bại");
             }
         }
-         void LoadImage(string path)
+        void LoadImage(string path)
         {
             try
             {
@@ -283,13 +283,13 @@ namespace QuanLyQuanCafe
         #region events
         private void btnViewBill_Click(object sender, EventArgs e)
         {
-            LoadListBillByDate(dtpkFromDate.Value,dtpkToDate.Value);
+            LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
             TinhTongDoanhThu();
             //LoadListbill();
         }
         private void fAdmin_Load(object sender, EventArgs e)
         {
-          
+
         }
 
         private void btnShowFood_Click(object sender, EventArgs e)
@@ -334,9 +334,9 @@ namespace QuanLyQuanCafe
             string priceText = nmFoodPrice.Text;
 
 
-          
+
             int categoryID = (cbFoodCategory.SelectedItem as Category).ID;
-          
+
             int soLuongTon = (int)nmSoLuongTon.Value;
             string imagePath = txbImagePath.Text;
             if (string.IsNullOrWhiteSpace(name))
@@ -404,7 +404,7 @@ namespace QuanLyQuanCafe
         }
 
         private void btnDeleteFood_Click(object sender, EventArgs e)
-        {   
+        {
             int id = Convert.ToInt32(txbFoodID.Text);
             if (FoodDAO.Instance.DeleteFood(id))
 
@@ -425,12 +425,12 @@ namespace QuanLyQuanCafe
             add { insertFood += value; }
             remove { insertFood -= value; }
         }
-         private event EventHandler deleteFood;
-         public event EventHandler DeleteFood
-         {
+        private event EventHandler deleteFood;
+        public event EventHandler DeleteFood
+        {
             add { deleteFood += value; }
             remove { deleteFood -= value; }
-         }
+        }
         private event EventHandler updateFood;
         public event EventHandler UpdateFood
         {
@@ -440,7 +440,7 @@ namespace QuanLyQuanCafe
 
         private void btnSearchFood_Click(object sender, EventArgs e)
         {
-        dtgvFood.DataSource = FoodDAO.Instance.SearchFoodByName(txbSreachFoodName.Text);
+            dtgvFood.DataSource = FoodDAO.Instance.SearchFoodByName(txbSreachFoodName.Text);
         }
         #endregion
 
@@ -509,7 +509,7 @@ namespace QuanLyQuanCafe
                 picFood.Image = null;
             }
         }
-      
+
         private void btnShowCategory_Click(object sender, EventArgs e)
         {
             LoadListCategory();
@@ -555,7 +555,7 @@ namespace QuanLyQuanCafe
                 MessageBox.Show("Thêm thất bại!");
             }
 
-          
+
         }
 
         private void btnEditCategory_Click(object sender, EventArgs e)
@@ -594,7 +594,7 @@ namespace QuanLyQuanCafe
             {
                 MessageBox.Show("Cập nhật thất bại!");
             }
-           
+
 
         }
 
@@ -679,7 +679,7 @@ namespace QuanLyQuanCafe
 
         private void btnEditTable_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btnDeleteTable_Click(object sender, EventArgs e)
@@ -705,7 +705,7 @@ namespace QuanLyQuanCafe
             {
                 txbTableId.Text = dtgvTable.CurrentRow.Cells["ID"].Value.ToString();
                 txbTableName.Text = dtgvTable.CurrentRow.Cells["Name"].Value.ToString();
-               
+
             }
         }
         private event EventHandler insertTable;
@@ -783,7 +783,7 @@ namespace QuanLyQuanCafe
 
         private void btnAddAccount_Click(object sender, EventArgs e)
         {
-            string usename= txbUseName.Text;
+            string usename = txbUseName.Text;
             string displayName = txbDisplayName.Text;
             int type = (int)numericUpDown1.Value;
             int idNhanVien = (int)cbNhanVien.SelectedValue; // nếu bạn có combobox chọn nhân viên
@@ -792,7 +792,7 @@ namespace QuanLyQuanCafe
 
         private void btnDeleteAccount_Click(object sender, EventArgs e)
         {
-        
+
             string usename = txbUseName.Text;
             DeleteAccount(usename);
         }
@@ -1034,22 +1034,22 @@ namespace QuanLyQuanCafe
 
         private void dgvBillHD_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-          
+
         }
 
         private void btnViewBillHD_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btnCloseBill_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void btnDeleteBill_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void dgvBillInfo_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -1110,13 +1110,13 @@ namespace QuanLyQuanCafe
                 if (BillDAO.Instance.DeleteBill(idBill))
                 {
                     MessageBox.Show("Đã xóa hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                   LoadListBillByDateHD(dtpkFromDate.Value, dtpkToDate.Value);
+                    LoadListBillByDateHD(dtpkFromDate.Value, dtpkToDate.Value);
                 }
                 else
                 {
                     MessageBox.Show("Xóa hóa đơn thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-               
+
             }
         }
 
@@ -1174,6 +1174,36 @@ namespace QuanLyQuanCafe
                 MessageBox.Show("Lỗi khi tải ảnh: " + ex.Message);
                 picFood.Image = null;
             }
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbMonAn_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtgvSizeMonAndtgvSizeMonAn_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void label29_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
