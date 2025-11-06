@@ -1203,7 +1203,7 @@ namespace QuanLyQuanCafe
 
         private void label29_Click(object sender, EventArgs e)
         {
-
+            //
         }
     }
 }
