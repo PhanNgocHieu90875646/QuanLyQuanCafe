@@ -344,7 +344,7 @@ namespace QuanLyQuanCafe
                 return;
             }
 
-            // Tính đơn giá (giá món + giá size)a
+            // Tính đơn giá (giá món + giá size)aa
             float giaMon = (cbFood.SelectedItem as Food).Price;
             float giaSize = (float)selectedSize.Gia;
             float donGia = (float)giaMon + giaSize;
