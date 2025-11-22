@@ -30,6 +30,31 @@ namespace QuanLyQuanCafe.DAO
             }
             return list;
         }
+        public Bill GetBillInfo(int idBill)
+        {
+                string query = @"
+           SELECT 
+    b.id,
+    b.DataCheckIn,
+    b.DataCheckOnt,
+    b.status,
+    b.discount,
+    b.totalPrice,
+    nv.HoTen AS TenNhanVien,
+	 ISNULL(km.TenKM, 'Không áp dụng') AS TenKhuyenMai
+FROM HoaDon b
+LEFT JOIN NhanVien nv ON b.IdNhanVien = nv.Id
+LEFT JOIN KhuyenMai km ON b.IdKhuyenMai = km.Id
+WHERE b.id = @idBill";
+
+            DataTable data = DataProvider.Instance.ExecuteQuery(query, new object[] { idBill });
+
+            if (data.Rows.Count > 0)
+                return new Bill(data.Rows[0]);
+
+            return null;
+        }
+
         public int GetUnCheckBillIdByTableId(int id)
         {
             DataTable data = DataProvider.Instance.ExecuteQuery("select *from dbo.HoaDon where inttable= " + id + " and status = 0");
@@ -40,35 +65,60 @@ namespace QuanLyQuanCafe.DAO
             }
             return -1;
         }
-        public void CheckOut(int id, int discount, double totalPrice, int idNhanVien)
+        public void CheckOut(int id, int discount, double totalPrice, int idNhanVien, int? idKhuyenMai, int? idKhachHang, double giamThuCong)
         {
-            string query = $"UPDATE HoaDon SET DataCheckOnt = GETDATE(), status = 1, discount = {discount} , totalPrice = {totalPrice}, IdNhanVien = {idNhanVien} WHERE id = {id}";
-            DataProvider.Instance.ExecuteNonQuery(query, new object[] { discount, totalPrice, idNhanVien, id });
+            string total = totalPrice.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
+            string km = idKhuyenMai.HasValue ? idKhuyenMai.Value.ToString() : "NULL";
+            string kh = idKhachHang.HasValue ? idKhachHang.Value.ToString() : "NULL";
+
+            string query = $@"
+    UPDATE HoaDon 
+    SET 
+        DataCheckOnt = GETDATE(),
+        status = 1,
+        discount = {discount},
+        totalPrice = {total},
+        IdNhanVien = {idNhanVien},
+        IdKhuyenMai = {km},
+        IdKhachHang = {kh},
+        GiamGiaDiem = {giamThuCong}
+    WHERE id = {id}";
+
+            DataProvider.Instance.ExecuteNonQuery(query);
         }
+
+
+
         public void InsertBill(int id)
         {
+
             DataProvider.Instance.ExecuteNonQuery("exec USP_InsertBill @inttable", new object[] { id });
         }
 
 
         public DataTable GetListBillByDateHD(DateTime checkIn, DateTime checkOut)
         {
-            string query = @"SELECT b.id AS ID, 
-                            b.DataCheckIn, 
-                            b.DataCheckOnt, 
-                            b.inttable AS IdBan, 
-                            b.status AS TrangThai, 
-                            b.discount AS GiamGia, 
-                            b.totalPrice AS TongTien, 
-                            b.IdNhanVien, 
-                            nv.HoTen AS TenNhanVien
-                     FROM HoaDon AS b 
-                     LEFT JOIN NhanVien AS nv ON b.IdNhanVien = nv.Id
-                     WHERE b.IsDeleted = 0 
-                           AND b.DataCheckIn >= @checkIn 
-                           AND (b.DataCheckOnt <= @checkOut OR b.DataCheckOnt IS NULL)
-                     ORDER BY b.DataCheckOnt DESC";
+            string query = @"
+                SELECT 
+                    b.id AS ID, 
+                    b.DataCheckIn AS NgayBatDau, 
+                    b.DataCheckOnt AS NgayKetThuc, 
+                    b.inttable AS IdBan, 
+                    b.status AS TrangThai, 
+                    b.discount AS GiamGia, 
+                    b.totalPrice AS TongTien, 
+                    b.IdNhanVien, 
+                    nv.HoTen AS TenNhanVien,
+                    ISNULL(km.TenKM, N'Không áp dụng') AS TenKhuyenMai,
+                    b.GiamGiaDiem 
+                FROM HoaDon AS b
+                LEFT JOIN NhanVien AS nv ON b.IdNhanVien = nv.Id
+                LEFT JOIN KhuyenMai AS km ON b.IdKhuyenMai = km.Id
+                WHERE b.IsDeleted = 0 
+                      AND b.DataCheckIn >= @checkIn 
+                      AND (b.DataCheckOnt <= @checkOut OR b.DataCheckOnt IS NULL)
+                ORDER BY b.DataCheckOnt DESC";
 
             return DataProvider.Instance.ExecuteQuery(query, new object[] { checkIn, checkOut });
         }
@@ -124,5 +174,33 @@ namespace QuanLyQuanCafe.DAO
             int result = DataProvider.Instance.ExecuteNonQuery(query, new object[] { idBill });
             return result > 0;
         }
+        public double GetTotalPrice(int idBill)
+        {
+            // Nếu bạn lưu giá mỗi dòng vào cột DonGia, dùng cột đó để tính cho chính xác.
+            string query = @"SELECT SUM(CASE WHEN DonGia IS NULL THEN 0 ELSE DonGia * [count] END) 
+                     FROM ThongTinHoaDon
+                     WHERE idBill = @idBill";
+            object result = DataProvider.Instance.ExecuteScalar(query, new object[] { idBill });
+            if (result == null || result == DBNull.Value) return 0.0;
+            try
+            {
+                return Convert.ToDouble(result);
+            }
+            catch
+            {
+                return 0.0;
+            }
+        }
+        public void SetStaffForBill(int idBill, int idNhanVien)
+        {
+            string query = "UPDATE HoaDon SET IdNhanVien = @idNV WHERE id = @idBill AND IdNhanVien IS NULL";
+            DataProvider.Instance.ExecuteNonQuery(query, new object[] { idNhanVien, idBill });
+        }
+        public void SetIdKhachHang(int idBill, int idKH)
+        {
+            string query = "UPDATE HoaDon SET IdKhachHang = @idKH WHERE id = @idBill";
+            DataProvider.Instance.ExecuteNonQuery(query, new object[] { idKH, idBill });
+        }
+
     }
 }

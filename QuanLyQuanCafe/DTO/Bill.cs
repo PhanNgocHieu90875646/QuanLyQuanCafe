@@ -9,7 +9,7 @@ namespace QuanLyQuanCafe.DTO
 {
     public class Bill
     {
-        public Bill(int id, DateTime? dataCheckIn, DateTime? dataCheckOnt,int status, int? idNhanVien, string tenNhanVien, int discount=0) {
+        public Bill(int id, DateTime? dataCheckIn, DateTime? dataCheckOnt,int status, int? idNhanVien, string tenNhanVien,int? idkhuyenmai, string tenKhuyenMai, double giamgiadiem, int discount=0) {
             this.ID = id;
             this.DateCheckIn = dataCheckIn;
             this.DateCheckOnt = dataCheckOnt;
@@ -17,6 +17,9 @@ namespace QuanLyQuanCafe.DTO
             this.Discount=discount;
             this.IdNhanVien = idNhanVien;
             this.TenNhanVien = tenNhanVien;
+            this.IdKhuyenMai = idkhuyenmai;
+            this.TenKhuyenMai = tenKhuyenMai;
+            this.GiamGiaDiem = giamgiadiem;
         }
         public Bill(DataRow row)
         {
@@ -32,9 +35,16 @@ namespace QuanLyQuanCafe.DTO
                 this.IdNhanVien = (int)row["IdNhanVien"];
             if (row.Table.Columns.Contains("TenNhanVien") && row["TenNhanVien"] != DBNull.Value)
                 this.TenNhanVien = row["TenNhanVien"].ToString();
+            if (row.Table.Columns.Contains("IdKhuyenMai") && row["IdKhuyenMai"] != DBNull.Value)
+                IdKhuyenMai = Convert.ToInt32(row["IdKhuyenMai"]);
+
+            if (row.Table.Columns.Contains("TenKhuyenMai"))
+                TenKhuyenMai = row["TenKhuyenMai"].ToString();
+            this.GiamGiaDiem = row["GiamGiaDiem"] != DBNull.Value ? Convert.ToDouble(row["GiamGiaDiem"]) : 0;
+
         }
 
-      
+
         private int discount;
         public int Discount
         {
@@ -67,5 +77,9 @@ namespace QuanLyQuanCafe.DTO
         }
         public int? IdNhanVien { get; set; }
         public string TenNhanVien { get; set; }
+        public string TenKhuyenMai { get; set; }
+        public int? IdKhuyenMai { get; set; }
+        public double GiamGiaDiem { get; set; }
+
     }
 }

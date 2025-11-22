@@ -54,7 +54,19 @@ namespace QuanLyQuanCafe.DAO
         {
             List<BillInfo> listBillInfo = new List<BillInfo>();
 
-            string query = @"SELECT c.id, c.IdBill as IdHoaDon, c.idFood as IdMon, f.name as TenMon, c.Count as SoLuong , f.price AS DonGia, (c.Count * f.price) AS ThanhTien FROM ThongTinHoaDon AS c INNER JOIN MonAn AS f ON c.idFood = f.ID WHERE c.idBill = @idBill";
+            string query = @"SELECT 
+                    c.id,
+                    c.IdBill AS IdHoaDon,
+                    c.idFood AS IdMon,
+                    f.name AS TenMon,
+                    s.Size AS SizeMon,
+                    c.Count AS SoLuong,
+                    (f.price + s.Gia) AS DonGia,
+                    (c.Count * (f.price + s.Gia)) AS ThanhTien
+                FROM ThongTinHoaDon AS c
+                INNER JOIN MonAn AS f ON c.idFood = f.id
+                INNER JOIN SizeMonAn AS s ON c.IdSizeMonAn = s.Id
+                WHERE c.IdBill = @idBill";
             DataTable data = DataProvider.Instance.ExecuteQuery(query, new object[] { idBill });
 
             foreach (DataRow item in data.Rows)
@@ -73,5 +85,11 @@ namespace QuanLyQuanCafe.DAO
             int result = DataProvider.Instance.ExecuteNonQuery(query, new object[] { idBill, idFood });
             return result > 0;
         }
+        public void DeleteAllFoodByBillID(int idBill)
+        {
+            string query = "DELETE FROM ThongTinHoaDon WHERE IdBill = " + idBill;
+            DataProvider.Instance.ExecuteNonQuery(query);
+        }
+
     }
 }

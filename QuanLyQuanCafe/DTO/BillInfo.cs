@@ -9,11 +9,12 @@ namespace QuanLyQuanCafe.DTO
 {
     public class BillInfo
     {
-        public BillInfo(int id, int billID, int foodID, int count,double dongia, string tenmon,double thanhtien) { 
+        public BillInfo(int id, int billID, int foodID, int count, string sizeMon, double dongia, string tenmon,double thanhtien) { 
              this.ID = id;
-            this.BillID = billID;
-            this.FoddID = foodID;
-            this.Count = count;
+            this.IdHoaDon = billID;
+            this.IdMonAn = foodID;
+            this.SoLuong = count;
+            this.SizeMon = sizeMon;
             this.DonGia = dongia;
             this.TenMon = tenmon;
             this.ThanhTien = thanhtien;
@@ -22,9 +23,10 @@ namespace QuanLyQuanCafe.DTO
         public BillInfo(DataRow row)
         {
             this.ID = (int)row["id"];
-            this.BillID = (int)row["idHoadon"];
-            this.FoddID = (int)row["idMon"];
-            this.Count = (int)row["SoLuong"];
+            this.IdHoaDon = (int)row["idHoadon"];
+            this.IdMonAn = (int)row["idMon"];
+            this.SoLuong = (int)row["SoLuong"];
+            this.SizeMon = row["SizeMon"].ToString();
             if (row.Table.Columns.Contains("DonGia"))
                 this.DonGia = float.Parse(row["DonGia"].ToString());
             if (row.Table.Columns.Contains("TenMon"))
@@ -32,20 +34,20 @@ namespace QuanLyQuanCafe.DTO
             if (row.Table.Columns.Contains("ThanhTien"))
                 ThanhTien = Convert.ToDouble(row["ThanhTien"]);
         }
-        private int count;
-        public int Count
+        private int soLuong;
+        public int SoLuong
         {
-            get { return count; }
-            set { count = value; }
+            get { return soLuong; }
+            set { soLuong = value; }
         }
         private int foodID;
-        public int FoddID
+        public int IdMonAn
         {
             get { return foodID; }
             set { foodID = value; }
         }
         private int billID;
-        public int BillID
+        public int IdHoaDon
         {
             get { return billID; }
             set { billID = value; }
@@ -59,5 +61,7 @@ namespace QuanLyQuanCafe.DTO
         public double DonGia { get; set; }
         public string TenMon { get; set; }
         public double ThanhTien { get; set; }
+        public string SizeMon { get; set; }
+
     }
 }

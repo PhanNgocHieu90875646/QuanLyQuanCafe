@@ -46,6 +46,24 @@ namespace QuanLyQuanCafe.DAO
             }
             return list;
         }
+        public bool HasFoodByCategoryId(int idCategory)
+        {
+            string query = "SELECT COUNT(*) FROM MonAn WHERE idCategory = @idCategory";
+            int count = (int)DataProvider.Instance.ExecuteScalar(query, new object[] { idCategory });
+            return count > 0;
+        }
+        public List<Food> GetListFoodd()
+        {
+            List<Food> list = new List<Food>();
+            string query = "SELECT * FROM MonAn";
+            DataTable data = DataProvider.Instance.ExecuteQuery(query);
+            foreach (DataRow item in data.Rows)
+            {
+                Food food = new Food(item);
+                list.Add(food);
+            }
+            return list;
+        }
         public List<Food> SearchFoodByName(string name)
         {
             List<Food> list = new List<Food>();

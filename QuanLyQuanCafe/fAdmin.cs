@@ -30,10 +30,11 @@ namespace QuanLyQuanCafe
             dtgvAccount.DataSource = acountlist;
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
             LoadListBillByDateHD(dtpkFromDate.Value, dtpkToDate.Value);
-
+            LoadSizeMon();
             LoadListFood();
             LoadCategoryIntoCombobox(cbFoodCategory);
             AddFoodBinding();
+            LoadSz();
             LoadListCategory();
             LoadListTable();
             AddCategoryBinding();
@@ -46,12 +47,70 @@ namespace QuanLyQuanCafe
             AddNhanVienBinding();
             LoadGioiTinh();
             LoadChucVu();
-
+            LoadPromotionList();
+            LoadLoaiKM();
+            AddPromotionBinding();
+            AddSizeBinding();
         }
         #region methods
         void LoadNhanVien()
         {
             dtgvNV.DataSource = NhanVienDAO.Instance.GetListNhanVien();
+        }
+        void LoadPromotionList()
+        {
+            dtgvPromotion.DataSource = PromotionDAO.Instance.GetAllPromotions();
+        }
+        void AddPromotionBinding()
+        {
+            txbIdKM.DataBindings.Add(new Binding("Text", dtgvPromotion.DataSource, "Id", true, DataSourceUpdateMode.Never));
+            txbTenKM.DataBindings.Add(new Binding("Text", dtgvPromotion.DataSource, "TenKM", true, DataSourceUpdateMode.Never));
+            txbMoTa.DataBindings.Add(new Binding("Text", dtgvPromotion.DataSource, "MoTa", true, DataSourceUpdateMode.Never));
+            cbLoaiKM.DataBindings.Add(new Binding("Text", dtgvPromotion.DataSource, "LoaiKM", true, DataSourceUpdateMode.Never));
+            txbGiaTri.DataBindings.Add(new Binding("Text", dtgvPromotion.DataSource, "GiaTri", true, DataSourceUpdateMode.Never));
+            dtpkStart.DataBindings.Add(new Binding("Value", dtgvPromotion.DataSource, "NgayBatDau", true, DataSourceUpdateMode.Never));
+            dtpkEnd.DataBindings.Add(new Binding("Value", dtgvPromotion.DataSource, "NgayKetThuc", true, DataSourceUpdateMode.Never));
+            txbDieuKien.DataBindings.Add(new Binding("Text", dtgvPromotion.DataSource, "DieuKienToiThieu", true, DataSourceUpdateMode.Never));
+            cbActive.DataBindings.Add(
+                    new Binding("Checked", dtgvPromotion.DataSource, "TrangThai", true, DataSourceUpdateMode.Never)
+            );
+        }
+        void AddSizeBinding()
+        {
+            // Xóa binding cũ (tránh lỗi lặp nhiều lần)
+            txbIdSize.DataBindings.Clear();
+            cbFoodSize.DataBindings.Clear();
+            txbSize2.DataBindings.Clear();
+            nmGiaThem.DataBindings.Clear();
+
+            // Thêm binding mới
+            txbIdSize.DataBindings.Add(new Binding("Text", dtgvSize.DataSource, "Id", true, DataSourceUpdateMode.Never));
+
+            // ComboBox tên món (IdMonAn) – hiển thị tên món
+            cbFoodSize.DataBindings.Add(new Binding("SelectedValue", dtgvSize.DataSource, "IdMonAn", true, DataSourceUpdateMode.Never));
+
+            // TextBox size
+            txbSize2.DataBindings.Add(new Binding("Text", dtgvSize.DataSource, "Size", true, DataSourceUpdateMode.Never));
+
+            // NumericUpDown giá
+            nmGiaThem.DataBindings.Add(new Binding("Value", dtgvSize.DataSource, "Gia", true, DataSourceUpdateMode.Never));
+        }
+
+        void LoadSizeMon()
+        {
+            dtgvSize.DataSource = SizeMonAnDAO.Instance.GetListSize();
+            List<SizeMonAn> listNhanVien = SizeMonAnDAO.Instance.GetListSize();
+            cbFoodSize.DataSource = FoodDAO.Instance.GetListFoodd();
+            cbFoodSize.DisplayMember = "name";
+            cbFoodSize.ValueMember = "Id";
+        }
+              void LoadNhanVienIntoComboBox()
+        {
+            List<NhanVien> listNhanVien = NhanVienDAO.Instance.GetListNhanVien(); // danh sách nhân viên
+
+            cbNhanVien.DataSource = listNhanVien;
+            cbNhanVien.DisplayMember = "HoTen";
+            cbNhanVien.ValueMember = "Id";
         }
 
         void AddAcountBinding()
@@ -69,14 +128,7 @@ namespace QuanLyQuanCafe
             // Binding combobox nhân viên theo IdNhanVien (cột bạn đã thêm trong bảng TaiKhoan)
             cbNhanVien.DataBindings.Add(new Binding("SelectedValue", dtgvAccount.DataSource, "IdNhanVien", true, DataSourceUpdateMode.Never));
         }
-        void LoadNhanVienIntoComboBox()
-        {
-            List<NhanVien> listNhanVien = NhanVienDAO.Instance.GetListNhanVien(); // danh sách nhân viên
 
-            cbNhanVien.DataSource = listNhanVien;
-            cbNhanVien.DisplayMember = "HoTen";
-            cbNhanVien.ValueMember = "Id";
-        }
 
         void LoadAcount()
         {
@@ -173,12 +225,25 @@ namespace QuanLyQuanCafe
             cbGioiTinh.Items.Add("Nam");
             cbGioiTinh.Items.Add("Nữ");
         }
+        private void LoadLoaiKM()
+        {
+            cbLoaiKM.Items.Clear();
+            cbLoaiKM.Items.Add("Phần trăm");
+            cbLoaiKM.Items.Add("Số tiền");
+        }
         private void LoadChucVu()
         {
             cbRole.Items.Clear();
             cbRole.Items.Add("Thu ngân");
             cbRole.Items.Add("Phục vụ");
             cbRole.Items.Add("Trông xe");
+        }
+        private void LoadSz()
+        {
+            txbSize2.Items.Clear();
+            txbSize2.Items.Add("Nhỏ");
+            txbSize2.Items.Add("Vừa");
+            txbSize2.Items.Add("Lớn");
         }
         void LoadCategoryIntoCombobox(ComboBox cb)
         {
@@ -602,16 +667,25 @@ namespace QuanLyQuanCafe
         {
             int id = int.Parse(txbCategoryID.Text);
 
+            // Kiểm tra xem danh mục có món nào không
+            if (FoodDAO.Instance.HasFoodByCategoryId(id))
+            {
+                MessageBox.Show("Không thể xóa danh mục này vì vẫn còn món ăn thuộc danh mục!",
+                                "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Nếu không có món nào thì cho phép xóa
             if (CategoryDAO.Instance.DeleteCategory(id))
             {
-                MessageBox.Show("Xóa thành công!");
+                MessageBox.Show("Xóa danh mục thành công!");
                 LoadListCategory();
                 if (deleteCategory != null)
                     deleteCategory(this, new EventArgs());
             }
             else
             {
-                MessageBox.Show("Xóa thất bại!");
+                MessageBox.Show("Xóa danh mục thất bại!");
             }
         }
 
@@ -1204,6 +1278,171 @@ namespace QuanLyQuanCafe
         private void label29_Click(object sender, EventArgs e)
         {
             //a
+        }
+        private event EventHandler insertSz;
+        public event EventHandler InsertSz
+        {
+            add { insertSz += value; }
+            remove { insertSz -= value; }
+        }
+        private event EventHandler deleteSz;
+        public event EventHandler DeleteSz
+        {
+            add { deleteSz += value; }
+            remove { deleteSz -= value; }
+        }
+        private event EventHandler updateSz;
+        public event EventHandler UpdateSz
+        {
+            add { updateSz += value; }
+            remove { updateSz -= value; }
+        }
+        private void button15_Click(object sender, EventArgs e)
+        {
+            int idMon = (int)cbFoodSize.SelectedValue;
+            string size = txbSize2.Text;
+            decimal gia = nmGiaThem.Value;
+
+            if (SizeMonAnDAO.Instance.InsertSize(idMon, size, gia))
+            {
+                MessageBox.Show("Thêm size thành công!");
+                LoadSizeMon();
+                if (insertSz != null)
+                    insertSz(this, new EventArgs());
+            }
+            else
+                MessageBox.Show("Lỗi khi thêm size!");
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(txbIdSize.Text);
+
+            // Kiểm tra size có đang được sử dụng không
+            if (SizeMonAnDAO.Instance.IsSizeInUse(id))
+            {
+                MessageBox.Show("Không thể xóa size này vì đang được sử dụng trong hóa đơn!",
+                                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Nếu không bị dùng, cho phép xóa
+            if (SizeMonAnDAO.Instance.DeleteSize(id))
+            {
+                MessageBox.Show("Xóa size thành công!");
+                LoadSizeMon();
+                if (deleteSz != null)
+                    deleteSz(this, new EventArgs());
+            }
+            else
+                MessageBox.Show("Lỗi khi xóa size!");
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(txbIdSize.Text);
+            int idMon = (int)cbFoodSize.SelectedValue;
+            string size = txbSize2.Text;
+            decimal gia = nmGiaThem.Value;
+
+            if (SizeMonAnDAO.Instance.UpdateSize(id, idMon, size, gia))
+            {
+                MessageBox.Show("Sửa size thành công!");
+                LoadSizeMon();
+                if (updateSz != null)
+                    updateSz(this, new EventArgs());
+            }
+            else
+                MessageBox.Show("Lỗi khi sửa size!");
+        }
+
+        private void dtgvSize_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dtgvSize.Rows[e.RowIndex];
+                txbIdSize.Text = row.Cells["Id"].Value.ToString();
+
+                cbFoodSize.Text = row.Cells["TenMon"].Value.ToString();
+                txbSize2.Text = row.Cells["Size"].Value.ToString();
+                nmGiaThem.Value = Convert.ToDecimal(row.Cells["Gia"].Value);
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            LoadSizeMon();
+        }
+
+        private void dtgvPromotion_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dtgvPromotion.Rows[e.RowIndex];
+                txbIdKM.Text = row.Cells["Id"].Value.ToString();
+                txbTenKM.Text = row.Cells["TenKM"].Value.ToString();
+                txbMoTa.Text = row.Cells["MoTa"].Value.ToString();
+                cbLoaiKM.Text = row.Cells["LoaiKM"].Value.ToString();
+                txbGiaTri.Text = row.Cells["GiaTri"].Value.ToString();
+                txbDieuKien.Text = row.Cells["DieuKienToiThieu"].Value.ToString();
+                dtpkStart.Value = Convert.ToDateTime(row.Cells["NgayBatDau"].Value);
+                dtpkEnd.Value = Convert.ToDateTime(row.Cells["NgayKetThuc"].Value);
+                cbActive.Checked = Convert.ToBoolean(row.Cells["TrangThai"].Value);
+            }
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            string tenKM = txbTenKM.Text;
+            string moTa = txbMoTa.Text;
+            string loaiKM = cbLoaiKM.Text;
+            double giaTri = double.Parse(txbGiaTri.Text);
+            double dieuKien = double.Parse(txbDieuKien.Text);
+            DateTime ngayBD = dtpkStart.Value;
+            DateTime ngayKT = dtpkEnd.Value;
+
+            if (PromotionDAO.Instance.InsertPromotion(tenKM, moTa, loaiKM, giaTri, ngayBD, ngayKT, dieuKien))
+            {
+                MessageBox.Show("Thêm khuyến mãi thành công!");
+                LoadPromotionList();
+            }
+            else MessageBox.Show("Thêm thất bại!");
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            int id = int.Parse(txbIdKM.Text);
+            if (PromotionDAO.Instance.DeletePromotion(id))
+            {
+                MessageBox.Show("Xóa khuyến mãi thành công!");
+                LoadPromotionList();
+            }
+            else MessageBox.Show("Không thể xóa!");
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            int id = int.Parse(txbIdKM.Text);
+            string tenKM = txbTenKM.Text;
+            string moTa = txbMoTa.Text;
+            string loaiKM = cbLoaiKM.Text;
+            double giaTri = double.Parse(txbGiaTri.Text);
+            double dieuKien = double.Parse(txbDieuKien.Text);
+            DateTime ngayBD = dtpkStart.Value;
+            DateTime ngayKT = dtpkEnd.Value;
+            bool trangThai = cbActive.Checked;
+
+            if (PromotionDAO.Instance.UpdatePromotion(id, tenKM, moTa, loaiKM, giaTri, ngayBD, ngayKT, dieuKien, trangThai))
+            {
+                MessageBox.Show("Cập nhật thành công!");
+                LoadPromotionList();
+            }
+            else MessageBox.Show("Cập nhật thất bại!");
+        }
+
+        private void panel57_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

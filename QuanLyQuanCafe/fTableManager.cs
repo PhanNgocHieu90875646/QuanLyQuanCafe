@@ -9,6 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Drawing.Printing;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using Microsoft.VisualBasic;
+
+
 
 namespace QuanLyQuanCafe
 {
@@ -22,6 +29,8 @@ namespace QuanLyQuanCafe
         }
         private Account currentAccount;
         private NhanVien currentStaff;
+        private KhachHang currentKhachHang = null;
+
 
         public fTableManager(Account acc, NhanVien staff)
         {
@@ -32,11 +41,110 @@ namespace QuanLyQuanCafe
            
             LoadTable();
             LoadCategory();
+     
             LoadComboboxTable(cbSwitchTable);
+            LoadKhuyenMai();
         }
 
         #region Method
-    
+        public void ExportBillToPDF(int idBill)
+        {
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.Filter = "PDF (*.pdf)|*.pdf";
+            saveFile.FileName = $"HoaDon_{idBill}.pdf";
+
+            if (saveFile.ShowDialog() != DialogResult.OK)
+                return;
+
+            // Lấy thông tin hóa đơn
+            Bill bill = BillDAO.Instance.GetBillInfo(idBill);
+            List<BillInfo> listBillInfo = BillInfoDAO.Instance.GetBillInfoByBillId(idBill);
+            double tongTien = BillDAO.Instance.GetTotalPrice(idBill);
+
+            Document doc = new Document(PageSize.A4);
+            PdfWriter.GetInstance(doc, new FileStream(saveFile.FileName, FileMode.Create));
+
+            doc.Open();
+
+            string ARIAL_FONT = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
+
+            // Tạo BaseFont (bf) và Font (font, fontBold) hỗ trợ Unicode
+            BaseFont bf = BaseFont.CreateFont(ARIAL_FONT, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+
+            // Định nghĩa các Font để sử dụng trong tài liệu
+            iTextSharp.text.Font fontTitle = new iTextSharp.text.Font(bf, 18, iTextSharp.text.Font.BOLD); // Dùng cho Tiêu đề
+            iTextSharp.text.Font fontInfo = new iTextSharp.text.Font(bf, 12, iTextSharp.text.Font.NORMAL); // Dùng cho thông tin hóa đơn
+                                                                                                               
+            // Sử dụng fontTitle đã được tạo bằng bf (BaseFont hỗ trợ Unicode)
+            Paragraph title = new Paragraph("HÓA ĐƠN THANH TOÁN", fontTitle);
+            title.Alignment = Element.ALIGN_CENTER;
+            doc.Add(title);
+            doc.Add(new Paragraph("\n"));
+
+            // Thông tin hóa đơn
+            // Sử dụng fontInfo (thay thế biến font cũ)
+            doc.Add(new Paragraph($"Mã hóa đơn: {bill.ID}", fontInfo));
+            doc.Add(new Paragraph($"Ngày vào: {bill.DateCheckIn}", fontInfo));
+            doc.Add(new Paragraph($"Ngày thanh toán: {bill.DateCheckOnt}", fontInfo));
+            doc.Add(new Paragraph($"Nhân viên: {bill.TenNhanVien}", fontInfo));
+            doc.Add(new Paragraph($"Khuyến mãi: {bill.TenKhuyenMai}", fontInfo));
+            doc.Add(new Paragraph($"Giảm giá điểm: {bill.GiamGiaDiem}", fontInfo));
+            doc.Add(new Paragraph("\n"));
+
+            // Bảng món ăn
+            PdfPTable table = new PdfPTable(5);
+            table.WidthPercentage = 100;
+            table.SetWidths(new float[] { 4f, 2f, 2f, 2f, 2f });
+
+            table.AddCell("Tên món");
+            table.AddCell("Size");
+            table.AddCell("SL");
+            table.AddCell("Đơn giá");
+            table.AddCell("Thành tiền");
+
+            foreach (var item in listBillInfo)
+            {
+                table.AddCell(item.TenMon);
+                table.AddCell(item.SizeMon);
+                table.AddCell(item.SoLuong.ToString());
+                table.AddCell(item.DonGia.ToString());
+                table.AddCell(item.ThanhTien.ToString());
+            }
+
+            doc.Add(table);
+
+                        doc.Add(new Paragraph(
+                $"\nTổng thanh toán: {tongTien} VNĐ",
+                new iTextSharp.text.Font(bf, 14, iTextSharp.text.Font.BOLD)
+            ));
+
+            doc.Close();
+
+            MessageBox.Show("Xuất hóa đơn thành công!", "Thông báo");
+        }
+
+        private bool isLoadingPromotion = false;
+        private double GetTongTienHienTai()
+        {
+            double tong = 0;
+            foreach (ListViewItem item in lsvBill.Items)
+            {
+                tong += Convert.ToDouble(item.SubItems[3].Text); // cột Thành tiền
+            }
+            return tong;
+        }
+
+        void LoadKhuyenMai()
+        {
+            isLoadingPromotion = true; // ✅ Bắt đầu gán dữ liệu
+
+            cbKhuyenMai.DataSource = PromotionDAO.Instance.GetActivePromotions();
+            cbKhuyenMai.DisplayMember = "TenKM";
+            cbKhuyenMai.ValueMember = "Id";
+            cbKhuyenMai.SelectedIndex = -1; // Không chọn mặc định
+
+            isLoadingPromotion = false; // ✅ Cho phép event chạy lại
+        }
         void ChangeAcount(int type)
         {
             adminToolStripMenuItem.Enabled=type==1;
@@ -60,6 +168,15 @@ namespace QuanLyQuanCafe
             Category category = CategoryDAO.Instance.GetCategoryByID(id);
             cbCategory.DataSource = new List<Category> { category };
             cbCategory.DisplayMember = "Name";
+        }
+        void LoadSzListBySzyID(int id)
+        {
+
+            List<SizeMonAn> listSize = SizeMonAnDAO.Instance.GetListSizeByFoodIdd(id);
+
+            cbSize.DataSource = listSize;
+            cbSize.DisplayMember = "Size";   // hoặc "TenSize" nếu bạn đặt tên vậy trong DTO
+            cbSize.ValueMember = "Id";
         }
         void LoadTableListByCategoryID(int id)
         {
@@ -200,12 +317,73 @@ namespace QuanLyQuanCafe
             f.InsertTable += f_InsertTable;
             f.UpdateTable += f_UpdateTable;
             f.DeleteTable += f_DeleteTable;
+
+            f.InsertSz += f_InsertSz;
+            f.UpdateSz += f_UpdateSz;
+            f.DeleteSz += f_DeleteSz;
             f.ShowDialog();
+        }
+
+        private void f_DeleteSz(object sender, EventArgs e)
+        {
+            if (cbSize.SelectedItem == null)
+                return;
+
+            SizeMonAn selectedSize = cbSize.SelectedItem as SizeMonAn;
+            if (selectedSize == null)
+                return;
+
+            LoadSzListBySzyID(selectedSize.Id);
+
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as Table).ID);
+            }
+
+            LoadTable();
+        }
+
+        private void f_UpdateSz(object sender, EventArgs e)
+        {
+            if (cbSize.SelectedItem == null)
+                return;
+
+            SizeMonAn selectedSize = cbSize.SelectedItem as SizeMonAn;
+            if (selectedSize == null)
+                return;
+
+            LoadSzListBySzyID(selectedSize.Id);
+
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as Table).ID);
+            }
+
+            LoadTable();
+        }
+
+        private void f_InsertSz(object sender, EventArgs e)
+        {
+            if (cbSize.SelectedItem == null)
+                return;
+
+            SizeMonAn selectedSize = cbSize.SelectedItem as SizeMonAn;
+            if (selectedSize == null)
+                return;
+
+            LoadSzListBySzyID(selectedSize.Id);
+
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as Table).ID);
+            }
+
+            LoadTable();
         }
 
         private void f_DeleteTable(object sender, EventArgs e)
         {
-            LoadCategoryListByCategoryID((cbCategory.SelectedItem as Category).ID);
+            LoadTableListByCategoryID((cbCategory.SelectedItem as Category).ID);
 
             if (lsvBill.Tag != null)
             {
@@ -217,7 +395,7 @@ namespace QuanLyQuanCafe
 
         private void f_UpdateTable(object sender, EventArgs e)
         {
-            LoadCategoryListByCategoryID((cbCategory.SelectedItem as Category).ID);
+            LoadTableListByCategoryID((cbCategory.SelectedItem as Category).ID);
 
             if (lsvBill.Tag != null)
             {
@@ -229,7 +407,7 @@ namespace QuanLyQuanCafe
 
         private void f_InsertTable(object sender, EventArgs e)
         {
-            LoadCategoryListByCategoryID((cbCategory.SelectedItem as Category).ID);
+            LoadTableListByCategoryID((cbCategory.SelectedItem as Table).ID);
 
             if (lsvBill.Tag != null)
             {
@@ -273,46 +451,6 @@ namespace QuanLyQuanCafe
 
         private void btnAddFood_Click(object sender, EventArgs e)
         {
-            //Table table = lsvBill.Tag as Table;
-
-            //if (table == null)
-            //{
-            //    MessageBox.Show("Hãy chọn bàn!"); return;
-            //}
-
-            //if (cbFood.SelectedItem == null)
-            //{
-            //    MessageBox.Show("Món ăn không tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
-            ////if (cbSize.SelectedItem == null)
-            ////{
-            ////    MessageBox.Show("Vui lòng chọn size món!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            ////    return;
-            ////}
-
-            //int idBill = BillDAO.Instance.GetUnCheckBillIdByTableId(table.ID);
-            //int foodID = (cbFood.SelectedItem as Food).ID; int count = (int)mnFoodCount.Value;
-            //int currentStock = FoodDAO.Instance.GetFoodStock(foodID);
-
-            //if (count > currentStock)
-            //{
-            //    MessageBox.Show("Số lượng bạn chọn vượt quá số lượng tồn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
-
-            //if (idBill == -1)
-            //{
-            //    BillDAO.Instance.InsertBill(table.ID);
-            //    BillInfoDAO.Instance.InsertBillInfo(BillDAO.Instance.GetMaxIDBill(), foodID, count);
-            //}
-            //else   float donGia = (float)selectedSize.Gia;
-            //{
-            //    BillInfoDAO.Instance.InsertBillInfo(idBill, foodID, count);
-            //}
-
-            //FoodDAO.Instance.UpdateFoodStock(foodID, currentStock - count);
-            //ShowBill(table.ID); LoadTable();
             Table table = lsvBill.Tag as Table;
             if (table == null)
             {
@@ -362,6 +500,9 @@ namespace QuanLyQuanCafe
             {
                 BillDAO.Instance.InsertBill(table.ID);
                 idBill = BillDAO.Instance.GetMaxIDBill();
+
+                int idNV = LoginAccount.IdNhanVien;  // ← bạn đang có biến nhân viên đang đăng nhập
+                BillDAO.Instance.SetStaffForBill(idBill, idNV);
             }
 
             // Thêm món vào bill với đúng size + giá size
@@ -376,8 +517,8 @@ namespace QuanLyQuanCafe
 
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
+            // ================== 0. Lấy bàn ==================
             Table table = lsvBill.Tag as Table;
-
             if (table == null)
             {
                 MessageBox.Show("Vui lòng chọn bàn trước khi thanh toán!");
@@ -385,31 +526,187 @@ namespace QuanLyQuanCafe
             }
 
             int idBill = BillDAO.Instance.GetUnCheckBillIdByTableId(table.ID);
-
             if (idBill == -1)
             {
                 MessageBox.Show("Bàn này chưa có món để thanh toán!");
                 return;
             }
 
+            // =====================================================================================
+            // 1. KHÁCH HÀNG – KHÔNG BẮT BUỘC
+            // =====================================================================================
 
-            int discount = (int)nmDisCount.Value;
-            double totalPrice = Convert.ToDouble(txbTotalPrice.Text.Split(',')[0].Replace(".", ""));
-            double finalTotalPrice = totalPrice - (totalPrice / 100) * discount;
+            string sdt = txtSDT.Text.Trim();
+            KhachHang kh = null;
+            int? idKhachHang = null;
+
+            if (!string.IsNullOrEmpty(sdt))
+            {
+                kh = KhachHangDAO.Instance.GetKHByPhone(sdt);
+
+                if (kh == null)
+                {
+                    DialogResult rs = MessageBox.Show(
+                        "Số điện thoại chưa có trong hệ thống.\n" +
+                        "Bạn có muốn tạo khách mới để tích điểm không?",
+                        "Khách mới",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (rs == DialogResult.Yes)
+                    {
+                        if (string.IsNullOrEmpty(txtTenKH.Text))
+                        {
+                            MessageBox.Show("Vui lòng nhập tên khách hàng!");
+                            return;
+                        }
+
+                        KhachHangDAO.Instance.Insert(txtTenKH.Text, sdt);
+                        kh = KhachHangDAO.Instance.GetKHByPhone(sdt);
+                    }
+                }
+
+                if (kh != null)
+                    idKhachHang = kh.Id;
+            }
+
+            int diemHienCo = kh?.DiemTichLuy ?? 0;
+
+            // =====================================================================================
+            // 2. TÍNH TIỀN
+            // =====================================================================================
+
+            double totalPrice = GetTongTienHienTai();
             if (totalPrice <= 0)
             {
-                MessageBox.Show("Tổng tiền hóa đơn phải lớn hơn 0 mới được thanh toán!", "Lỗi");
+                MessageBox.Show("Tổng tiền phải lớn hơn 0!");
                 return;
             }
 
-            if (MessageBox.Show(
-                string.Format("Bạn có chắc thanh toán hóa đơn cho bàn {0}?\nTổng tiền = {1} - ({1} / 100) x {2} = {3}",
-                table.Name, totalPrice, discount, finalTotalPrice),
-                "Xác nhận thanh toán", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            double finalTotalPrice = totalPrice;
+            double giamGia = 0;
+            int? idKhuyenMai = null;
+
+            // =============== 2.1 Khuyến mãi ===============
+            if (cbKhuyenMai.SelectedItem != null)
             {
-             BillDAO.Instance.CheckOut(idBill, discount, totalPrice, currentStaff.Id);
-             ShowBill(table.ID);                   LoadTable();
-            }}
+                Promotion km = cbKhuyenMai.SelectedItem as Promotion;
+
+                if (km != null)
+                {
+                    if (totalPrice >= km.DieuKienToiThieu)
+                    {
+                        idKhuyenMai = km.Id;
+
+                        if (km.LoaiKM == "Phần trăm")
+                            giamGia = totalPrice * km.GiaTri / 100;
+                        else
+                            giamGia = km.GiaTri;
+
+                        finalTotalPrice -= giamGia;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Chưa đủ điều kiện khuyến mãi!");
+                        return;
+                    }
+                }
+            }
+
+            // =============== 2.2 Giảm giá thủ công ===============
+            int giamThuCong = (int)nmDisCount.Value;
+
+            if (giamThuCong > 0)
+            {
+                double giam = totalPrice * giamThuCong / 100.0;
+                giamGia += giam;
+                finalTotalPrice -= giam;
+            }
+
+            // =============== 2.3 Dùng điểm (NHẬP THỦ CÔNG) ===============
+
+            int diemDung = (int)nmUsePoint.Value;  // lấy giá trị user nhập
+
+            if (kh != null)
+            {
+                // KHÔNG ĐƯỢC DÙNG QUÁ SỐ ĐIỂM HIỆN CÓ
+                if (diemDung > diemHienCo)
+                {
+                    MessageBox.Show($"Khách chỉ có {diemHienCo} điểm!");
+                    return;
+                }
+
+                // ĐIỂM GIỚI HẠN TỐI ĐA 50%
+                if (diemDung > 50)
+                {
+                    MessageBox.Show("Chỉ được dùng tối đa 50 điểm (tương đương 50%)!");
+                    return;
+                }
+
+                if (diemDung > 0)
+                {
+                    double giam = totalPrice * diemDung / 100.0;
+                    giamGia += giam;
+                    finalTotalPrice -= giam;
+                }
+            }
+
+            if (finalTotalPrice < 0)
+                finalTotalPrice = 0;
+
+            // =====================================================================================
+            // 3. XÁC NHẬN
+            // =====================================================================================
+
+            string tenKM = cbKhuyenMai.SelectedItem != null ?
+                (cbKhuyenMai.SelectedItem as Promotion).TenKM :
+                "Không có";
+
+            if (MessageBox.Show(
+                $"Bàn: {table.Name}\n" +
+                $"Tổng: {totalPrice:N0} đ\n" +
+                $"Khuyến mãi: {tenKM}\n" +
+                $"Giảm thủ công: {giamThuCong}%\n" +
+                $"Dùng điểm: {diemDung}%\n" +
+                $"==> Phải trả: {finalTotalPrice:N0} đ\n\n" +
+                $"Xác nhận thanh toán?",
+                "Thanh toán",
+                MessageBoxButtons.OKCancel) != DialogResult.OK)
+                return;
+
+            // =====================================================================================
+            // 4. CẬP NHẬT ĐIỂM
+            // =====================================================================================
+
+            if (kh != null)
+            {
+                int diemCong = (int)(finalTotalPrice / 10000);  // 10k = 1 điểm
+                int diemMoi = kh.DiemTichLuy - diemDung + diemCong;
+
+                if (diemMoi < 0) diemMoi = 0;
+
+                KhachHangDAO.Instance.UpdateDiem(kh.Id, diemMoi);
+            }
+
+            // =====================================================================================
+            // 5. CHECKOUT
+            // =====================================================================================
+
+            BillDAO.Instance.CheckOut(
+                idBill,
+                giamThuCong,
+                finalTotalPrice,
+                currentStaff.Id,
+                idKhuyenMai,
+                idKhachHang,
+                diemDung
+            );
+
+            MessageBox.Show("Thanh toán thành công!");
+
+            ShowBill(table.ID);
+            LoadTable();
+        }
         private void btnSwitchTable_Click(object sender, EventArgs e)
         {
             int id1 = (lsvBill.Tag as Table).ID;
@@ -448,18 +745,214 @@ namespace QuanLyQuanCafe
             ComboBox cb = sender as ComboBox;
             if (cb.SelectedItem == null) return;
 
-            Food selected = cb.SelectedItem as Food;
-            int idFood = selected.ID;
+            // Lấy món ăn được chọn
+            Food selectedFood = cb.SelectedItem as Food;
+            if (selectedFood == null) return;
 
-            //Load size cho món này
+            int idFood = selectedFood.ID;
+
+            try
+            {
+                // Giả sử trong DB cột Image chỉ lưu tên file, ví dụ: "trasua.png"
+                string imagePath = Application.StartupPath + @"\Images\" + selectedFood.ImagePath;
+
+                if (File.Exists(imagePath))
+                {
+                    picFoodImage.Image = System.Drawing.Image.FromFile(imagePath);
+                }
+                else
+                {
+                    picFoodImage.Image = null;
+                }
+            }
+            catch
+            {
+                picFoodImage.Image = null;
+            }
+
+            // Load size theo món ăn
             cbSize.DataSource = SizeMonAnDAO.Instance.GetListSizeByFoodId(idFood);
             cbSize.DisplayMember = "Size";
-
         }
 
         private void cbSize_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void cbKhuyenMai_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isLoadingPromotion) return; // ✅ Không làm gì khi đang load
+            if (cbKhuyenMai.SelectedItem == null) return;
+
+            Promotion km = cbKhuyenMai.SelectedItem as Promotion;
+            double tongTien = GetTongTienHienTai();
+
+            if (tongTien < km.DieuKienToiThieu)
+            {
+                MessageBox.Show("Chưa đủ điều kiện áp dụng khuyến mãi này!");
+                cbKhuyenMai.SelectedIndex = -1; // Bỏ chọn để tránh lặp
+                return;
+            }
+
+            double giam = 0;
+            if (km.LoaiKM == "Phần trăm")
+                giam = tongTien * km.GiaTri / 100;
+            else if (km.LoaiKM == "Số tiền")
+                giam = km.GiaTri;
+
+          
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Table table = lsvBill.Tag as Table;
+            //if (table == null)
+            //{
+            //    MessageBox.Show("Không có bàn nào được chọn!");
+            //    return;
+            //}
+
+            //int idBill = BillDAO.Instance.GetUnCheckBillIdByTableId(table.ID);
+            //if (idBill == -1)
+            //{
+            //    MessageBox.Show("Bàn này chưa có hóa đơn!");
+            //    return;
+            //}
+
+            //SaveFileDialog save = new SaveFileDialog();
+            //save.Filter = "PDF file (*.pdf)|*.pdf";
+            //save.FileName = $"HoaDon_Ban{table.Name}_{DateTime.Now:ddMMyyyyHHmm}.pdf";
+
+            //if (save.ShowDialog() == DialogResult.OK)
+            //{
+            //    PrintDocument doc = new PrintDocument();
+            //    doc.PrintPage += (s, ev) =>
+            //    {
+            //        float y = 20;
+            //        Font font = new Font("Arial", 12);
+
+            //        ev.Graphics.DrawString("HÓA ĐƠN THANH TOÁN",
+            //            new Font("Arial", 16, FontStyle.Bold),
+            //            Brushes.Black, 200, y);
+
+            //        y += 50;
+
+            //        List<BillInfo> list = BillInfoDAO.Instance.GetBillInfoByBillId(idBill);
+
+            //        foreach (var item in list)
+            //        {
+            //            string line = $"{item.TenMon} ({item.SizeMon}) x{item.SoLuong}  =  {item.ThanhTien:N0}₫";
+            //            ev.Graphics.DrawString(line, font, Brushes.Black, 50, y);
+            //            y += 25;
+            //        }
+
+            //        y += 20;
+            //        var total = BillDAO.Instance.GetTotalPrice(idBill);
+            //        ev.Graphics.DrawString($"TỔNG TIỀN: {total:N0}₫",
+            //            new Font("Arial", 14, FontStyle.Bold),
+            //            Brushes.Black, 50, y);
+            //    };
+
+            //    // Xuất PDF không cần thư viện ngoài
+            //    doc.PrinterSettings.PrintToFile = true;
+            //    doc.PrinterSettings.PrintFileName = save.FileName;
+
+            //    doc.Print();
+
+            //    MessageBox.Show("Xuất hóa đơn thành công!");
+            //}
+            Table table = lsvBill.Tag as Table;
+
+            if (table == null)
+            {
+                MessageBox.Show("Vui lòng chọn bàn!", "Thông báo");
+                return;
+            }
+
+            int idBill = BillDAO.Instance.GetUnCheckBillIdByTableId(table.ID);
+
+            if (idBill == -1)
+            {
+                MessageBox.Show("Bàn chưa có hóa đơn!", "Thông báo");
+                return;
+            }
+
+            ExportBillToPDF(idBill);
+        }
+        //private void ChangeItemEdit(bool mode, bool isInCart = false)
+        //{
+        //    itemRemove.Enabled = mode && isInCart;
+        //    if (!mode)
+        //    {
+        //        itemName.Text = "";
+        //        itemPrice.Text = "";
+        //        itemId.Text = "";
+        //        itemPicture.Image = null;
+        //    }
+
+        //    itemQuantity.Enabled = mode;
+        //    itemSave.Enabled = mode;
+        //    itemCancel.Enabled = mode;
+        //}
+      
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+        private int? currentCustomerId = null;
+        private void btnTimKhachHang_Click(object sender, EventArgs e)
+        {
+            fChonKhachHang f = new fChonKhachHang();
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                currentKhachHang = f.SelectedKhach;
+
+                // Gán ra giao diện
+                txtTenKH.Text = currentKhachHang.TenKH;
+                txtSDT.Text = currentKhachHang.SoDienThoai;
+                nmUsePoint.Text = currentKhachHang.DiemTichLuy.ToString();
+            }
+        }
+
+        private void btnCancelFood_Click(object sender, EventArgs e)
+        {
+            Table table = lsvBill.Tag as Table;
+
+            if (table == null)
+            {
+                MessageBox.Show("Vui lòng chọn bàn!", "Thông báo");
+                return;
+            }
+
+            int idBill = BillDAO.Instance.GetUnCheckBillIdByTableId(table.ID);
+
+            if (idBill == -1)
+            {
+                MessageBox.Show("Bàn này chưa gọi món nào!", "Thông báo");
+                return;
+            }
+
+            // Hiển thị xác nhận
+            DialogResult result = MessageBox.Show(
+                "Bạn có chắc muốn hủy toàn bộ món của bàn \"" + table.Name + "\" không?",
+                "Xác nhận hủy món",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.No)
+                return;
+
+            // Xóa toàn bộ món trong hóa đơn
+            BillInfoDAO.Instance.DeleteAllFoodByBillID(idBill);
+
+            // Cập nhật giao diện
+            ShowBill(table.ID);
+            LoadTable();
+
+            MessageBox.Show("Đã hủy toàn bộ món của bàn " + table.Name, "Thông báo");
         }
     }
 }
