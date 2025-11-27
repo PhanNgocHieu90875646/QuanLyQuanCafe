@@ -530,7 +530,21 @@ namespace QuanLyQuanCafe
             {
                 MessageBox.Show("Bàn này chưa có món để thanh toán!");
                 return;
+
             }
+            // tạo mã qr thanh toán
+            if (idBill == -1) {
+                MessageBox.Show("Bàn này chưa có món để thanh toán!");
+                return;
+            }
+
+
+
+
+
+
+
+
 
             // =====================================================================================
             // 1. KHÁCH HÀNG – KHÔNG BẮT BUỘC
@@ -706,7 +720,21 @@ namespace QuanLyQuanCafe
 
             ShowBill(table.ID);
             LoadTable();
+            
+
+
         }
+
+
+
+
+
+
+
+
+
+
+
         private void btnSwitchTable_Click(object sender, EventArgs e)
         {
             int id1 = (lsvBill.Tag as Table).ID;
@@ -953,6 +981,16 @@ namespace QuanLyQuanCafe
             LoadTable();
 
             MessageBox.Show("Đã hủy toàn bộ món của bàn " + table.Name, "Thông báo");
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
