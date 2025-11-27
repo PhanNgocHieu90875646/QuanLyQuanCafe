@@ -18,7 +18,7 @@ namespace QuanLyQuanCafe.DAO
         }
         private DataProvider() { }
 
-        private string connectionSTR = "Data Source=HIEUPHAN\\SQLEXPRESS;Initial Catalog=QuanLyQuanCafe;Integrated Security=True";
+        private string connectionSTR = "Data Source=NGUYENNHATLINH;Initial Catalog=QLtrasua;Integrated Security=True";
 
         public DataTable ExecuteQuery(string query, object[] prameter=null)
         {
