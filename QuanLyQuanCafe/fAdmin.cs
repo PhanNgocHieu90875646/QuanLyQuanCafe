@@ -1535,5 +1535,10 @@ namespace QuanLyQuanCafe
 
             chkTrangThai.Checked = Convert.ToInt32(row.Cells["TrangThai"].Value) == 1;
         }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
