@@ -44,7 +44,6 @@
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cbKhuyenMai = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.btnCancelFood = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -52,6 +51,7 @@
             this.btnCheckOut = new System.Windows.Forms.Button();
             this.btnDisCount = new System.Windows.Forms.Button();
             this.nmDisCount = new System.Windows.Forms.NumericUpDown();
+            this.btnCancelFood = new System.Windows.Forms.Button();
             this.cbSwitchTable = new System.Windows.Forms.ComboBox();
             this.btnSwitchTable = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -69,7 +69,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.btnTimKhachHang = new System.Windows.Forms.Button();
             this.nmUsePoint = new System.Windows.Forms.NumericUpDown();
-            this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.txtTenKH = new System.Windows.Forms.TextBox();
@@ -94,14 +93,14 @@
             this.thôngTinTàiKhoảnToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1302, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1302, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // adminToolStripMenuItem
             // 
             this.adminToolStripMenuItem.Name = "adminToolStripMenuItem";
-            this.adminToolStripMenuItem.Size = new System.Drawing.Size(67, 26);
+            this.adminToolStripMenuItem.Size = new System.Drawing.Size(67, 24);
             this.adminToolStripMenuItem.Text = "Admin";
             this.adminToolStripMenuItem.Click += new System.EventHandler(this.adminToolStripMenuItem_Click);
             // 
@@ -111,7 +110,7 @@
             this.thôngTinCáNhânToolStripMenuItem,
             this.đăngXuấtToolStripMenuItem});
             this.thôngTinTàiKhoảnToolStripMenuItem.Name = "thôngTinTàiKhoảnToolStripMenuItem";
-            this.thôngTinTàiKhoảnToolStripMenuItem.Size = new System.Drawing.Size(151, 26);
+            this.thôngTinTàiKhoảnToolStripMenuItem.Size = new System.Drawing.Size(151, 24);
             this.thôngTinTàiKhoảnToolStripMenuItem.Text = "Thông tin tài khoản";
             // 
             // thôngTinCáNhânToolStripMenuItem
@@ -213,16 +212,6 @@
             this.panel3.Size = new System.Drawing.Size(494, 105);
             this.panel3.TabIndex = 0;
             // 
-            // btnCancelFood
-            // 
-            this.btnCancelFood.Location = new System.Drawing.Point(424, 1);
-            this.btnCancelFood.Name = "btnCancelFood";
-            this.btnCancelFood.Size = new System.Drawing.Size(64, 59);
-            this.btnCancelFood.TabIndex = 19;
-            this.btnCancelFood.Text = "Hủy ";
-            this.btnCancelFood.UseVisualStyleBackColor = true;
-            this.btnCancelFood.Click += new System.EventHandler(this.btnCancelFood_Click);
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(397, 66);
@@ -294,6 +283,16 @@
             this.nmDisCount.TabIndex = 5;
             this.nmDisCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nmDisCount.ValueChanged += new System.EventHandler(this.nmDisCount_ValueChanged);
+            // 
+            // btnCancelFood
+            // 
+            this.btnCancelFood.Location = new System.Drawing.Point(424, 1);
+            this.btnCancelFood.Name = "btnCancelFood";
+            this.btnCancelFood.Size = new System.Drawing.Size(64, 59);
+            this.btnCancelFood.TabIndex = 19;
+            this.btnCancelFood.Text = "Hủy ";
+            this.btnCancelFood.UseVisualStyleBackColor = true;
+            this.btnCancelFood.Click += new System.EventHandler(this.btnCancelFood_Click);
             // 
             // cbSwitchTable
             // 
@@ -441,21 +440,20 @@
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.btnTimKhachHang);
             this.panel1.Controls.Add(this.nmUsePoint);
-            this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.txtTenKH);
             this.panel1.Controls.Add(this.txtSDT);
             this.panel1.Location = new System.Drawing.Point(1006, 40);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(284, 608);
+            this.panel1.Size = new System.Drawing.Size(284, 858);
             this.panel1.TabIndex = 4;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label10.Location = new System.Drawing.Point(3, 249);
+            this.label10.Location = new System.Drawing.Point(8, 214);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(101, 18);
             this.label10.TabIndex = 24;
@@ -463,65 +461,55 @@
             // 
             // btnTimKhachHang
             // 
-            this.btnTimKhachHang.Location = new System.Drawing.Point(92, 203);
+            this.btnTimKhachHang.Location = new System.Drawing.Point(158, 262);
             this.btnTimKhachHang.Name = "btnTimKhachHang";
             this.btnTimKhachHang.Size = new System.Drawing.Size(120, 33);
             this.btnTimKhachHang.TabIndex = 20;
-            this.btnTimKhachHang.Text = "TimKhachHang";
+            this.btnTimKhachHang.Text = "Tìm khách hàng";
             this.btnTimKhachHang.UseVisualStyleBackColor = true;
             this.btnTimKhachHang.Click += new System.EventHandler(this.btnTimKhachHang_Click);
             // 
             // nmUsePoint
             // 
-            this.nmUsePoint.Location = new System.Drawing.Point(133, 245);
+            this.nmUsePoint.Location = new System.Drawing.Point(120, 214);
             this.nmUsePoint.Name = "nmUsePoint";
-            this.nmUsePoint.Size = new System.Drawing.Size(120, 22);
+            this.nmUsePoint.Size = new System.Drawing.Size(158, 22);
             this.nmUsePoint.TabIndex = 22;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label9.Location = new System.Drawing.Point(26, 166);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(42, 18);
-            this.label9.TabIndex = 21;
-            this.label9.Text = "SDT:";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label8.Location = new System.Drawing.Point(26, 121);
+            this.label8.Location = new System.Drawing.Point(13, 120);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(83, 18);
+            this.label8.Size = new System.Drawing.Size(81, 18);
             this.label8.TabIndex = 20;
-            this.label8.Text = "Ten Khach:";
+            this.label8.Text = "Tên khách:";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label7.Location = new System.Drawing.Point(26, 87);
+            this.label7.Location = new System.Drawing.Point(8, 168);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(42, 18);
+            this.label7.Size = new System.Drawing.Size(98, 18);
             this.label7.TabIndex = 19;
-            this.label7.Text = "SDT:";
+            this.label7.Text = "Số điện thoại:";
             // 
             // txtTenKH
             // 
-            this.txtTenKH.Location = new System.Drawing.Point(133, 121);
+            this.txtTenKH.Location = new System.Drawing.Point(109, 120);
             this.txtTenKH.Name = "txtTenKH";
             this.txtTenKH.ReadOnly = true;
-            this.txtTenKH.Size = new System.Drawing.Size(100, 22);
+            this.txtTenKH.Size = new System.Drawing.Size(169, 22);
             this.txtTenKH.TabIndex = 1;
             // 
             // txtSDT
             // 
-            this.txtSDT.Location = new System.Drawing.Point(133, 83);
+            this.txtSDT.Location = new System.Drawing.Point(109, 164);
             this.txtSDT.Name = "txtSDT";
             this.txtSDT.ReadOnly = true;
-            this.txtSDT.Size = new System.Drawing.Size(100, 22);
+            this.txtSDT.Size = new System.Drawing.Size(169, 22);
             this.txtSDT.TabIndex = 0;
             // 
             // fTableManager
@@ -595,7 +583,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.NumericUpDown nmUsePoint;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtTenKH;

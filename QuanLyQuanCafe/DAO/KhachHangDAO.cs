@@ -125,7 +125,60 @@ namespace QuanLyQuanCafe.DAO
 
             return list;
         }
+        public List<KhachHang> GetListKhachHang()
+        {
+            List<KhachHang> list = new List<KhachHang>();
+            DataTable data = DataProvider.Instance.ExecuteQuery("SELECT * FROM KhachHang");
 
+            foreach (DataRow row in data.Rows)
+            {
+                list.Add(new KhachHang(row));
+            }
+
+            return list;
+        }
+        public bool InsertKH(string ten, string sdt)
+        {
+            string query = $"INSERT INTO KhachHang (TenKH, SoDienThoai, DiemTichLuy, NgayThamGia, TrangThai) VALUES (N'{ten}', N'{sdt}', 0, GETDATE(), 1)";
+
+            int result = DataProvider.Instance.ExecuteNonQuery(query,
+                    new object[] { ten, sdt });
+
+            return result > 0;
+        }
+
+        public bool Update(int id, string ten, string sdt, int diem, int trangThai)
+        {
+            string query = $"UPDATE KhachHang SET TenKH = N'{ten}', SoDienThoai = N'{sdt}', DiemTichLuy = {diem}, TrangThai = {trangThai} WHERE Id = {id}";
+
+            int result = DataProvider.Instance.ExecuteNonQuery(query,
+                    new object[] { ten, sdt, diem, trangThai, id });
+
+            return result > 0;
+        }
+
+
+        public bool Delete(int id)
+        {
+            string query = "DELETE FROM KhachHang WHERE Id = @id";
+
+            int result = DataProvider.Instance.ExecuteNonQuery(query,
+                    new object[] { id });
+
+            return result > 0;
+        }
+        public bool IsPhoneExist(string sdt, int? id = null)
+        {
+            string query = $"SELECT COUNT(*) FROM KhachHang WHERE SoDienThoai = N'{sdt}'";
+
+            if (id != null)
+            {
+                query += " AND Id <> @id";
+                return (int)DataProvider.Instance.ExecuteScalar(query, new object[] { sdt, id }) > 0;
+            }
+
+            return (int)DataProvider.Instance.ExecuteScalar(query, new object[] { sdt }) > 0;
+        }
 
     }
 

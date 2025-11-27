@@ -88,7 +88,7 @@ namespace QuanLyQuanCafe
             doc.Add(new Paragraph($"Ngày thanh toán: {bill.DateCheckOnt}", fontInfo));
             doc.Add(new Paragraph($"Nhân viên: {bill.TenNhanVien}", fontInfo));
             doc.Add(new Paragraph($"Khuyến mãi: {bill.TenKhuyenMai}", fontInfo));
-            doc.Add(new Paragraph($"Giảm giá điểm: {bill.GiamGiaDiem}", fontInfo));
+            //doc.Add(new Paragraph($"Giảm giá điểm: {bill.GiamGiaDiem}", fontInfo));
             doc.Add(new Paragraph("\n"));
 
             // Bảng món ăn

@@ -42,6 +42,7 @@ namespace QuanLyQuanCafe
             LoadNhanVienIntoComboBox();
             AddAcountBinding();
             LoadAcount();
+            LoadKhachHang();
             LoadTableStatus();
             LoadNhanVien();
             AddNhanVienBinding();
@@ -56,6 +57,10 @@ namespace QuanLyQuanCafe
         void LoadNhanVien()
         {
             dtgvNV.DataSource = NhanVienDAO.Instance.GetListNhanVien();
+        }
+        void LoadKhachHang()
+        {
+            dtgvKhachHang.DataSource = KhachHangDAO.Instance.GetListKhachHang();
         }
         void LoadPromotionList()
         {
@@ -1443,6 +1448,92 @@ namespace QuanLyQuanCafe
         private void panel57_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void label49_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            string ten = txtTenKH.Text.Trim();
+            string sdt = txtSDT.Text.Trim();
+
+            if (ten == "" || sdt == "")
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                return;
+            }
+
+            // KIỂM TRA TRÙNG SĐT TRƯỚC KHI THÊM
+            if (KhachHangDAO.Instance.IsPhoneExist(sdt))
+            {
+                MessageBox.Show("Số điện thoại đã tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (KhachHangDAO.Instance.InsertKH(ten, sdt))
+            {
+                MessageBox.Show("Thêm khách hàng thành công!");
+                LoadKhachHang();
+            }
+            else
+                MessageBox.Show("Thêm thất bại!");
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            int id = int.Parse(txtIDKH.Text);
+            string ten = txtTenKH.Text.Trim();
+            string sdt = txtSDT.Text.Trim();
+            int diem = int.Parse(txtDiem.Text);
+            int trangThai = chkTrangThai.Checked ? 1 : 0;
+
+            // KIỂM TRA TRÙNG SĐT (loại trừ chính record đang sửa)
+          
+
+            if (KhachHangDAO.Instance.Update(id, ten, sdt, diem, trangThai))
+            {
+                MessageBox.Show("Sửa thành công!");
+                LoadKhachHang();
+            }
+            else
+            {
+                MessageBox.Show("Sửa thất bại!");
+            }
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            int id = int.Parse(txtIDKH.Text);
+
+            if (MessageBox.Show("Xóa khách hàng này?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                if (KhachHangDAO.Instance.Delete(id))
+                {
+                    MessageBox.Show("Xóa thành công!");
+                    LoadKhachHang();
+                }
+                else
+                {
+                    MessageBox.Show("Xóa thất bại!");
+                }
+            }
+        }
+
+        private void dtgvKhachHang_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            DataGridViewRow row = dtgvKhachHang.Rows[e.RowIndex];
+
+            txtIDKH.Text = row.Cells["Id"].Value.ToString();
+            txtTenKH.Text = row.Cells["TenKH"].Value.ToString();
+            txtSDT.Text = row.Cells["SoDienThoai"].Value.ToString();
+            txtDiem.Text = row.Cells["DiemTichLuy"].Value.ToString();
+
+            chkTrangThai.Checked = Convert.ToInt32(row.Cells["TrangThai"].Value) == 1;
         }
     }
 }
