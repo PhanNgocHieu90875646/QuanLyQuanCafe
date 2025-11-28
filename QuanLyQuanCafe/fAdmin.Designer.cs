@@ -106,6 +106,7 @@
             this.txbSreachFoodName = new System.Windows.Forms.TextBox();
             this.btnSearchFood = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.picFood = new System.Windows.Forms.PictureBox();
             this.dtgvFood = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel19 = new System.Windows.Forms.Panel();
@@ -136,14 +137,29 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.button7 = new System.Windows.Forms.Button();
             this.btnViewBill = new System.Windows.Forms.Button();
+            this.dtpkToDate = new System.Windows.Forms.DateTimePicker();
             this.dtpkFromDate = new System.Windows.Forms.DateTimePicker();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dtgvBillDetail = new System.Windows.Forms.DataGridView();
             this.label5 = new System.Windows.Forms.Label();
             this.lblTotalRevenue = new System.Windows.Forms.TextBox();
             this.dtgvBill = new System.Windows.Forms.DataGridView();
-            this.dtpkToDate = new System.Windows.Forms.DateTimePicker();
             this.tcBill = new System.Windows.Forms.TabControl();
+            this.tpTable = new System.Windows.Forms.TabPage();
+            this.panel21 = new System.Windows.Forms.Panel();
+            this.dtgvTable = new System.Windows.Forms.DataGridView();
+            this.panel22 = new System.Windows.Forms.Panel();
+            this.panel23 = new System.Windows.Forms.Panel();
+            this.txbTableName = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.panel24 = new System.Windows.Forms.Panel();
+            this.txbTableId = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.panel25 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.btnShowTable = new System.Windows.Forms.Button();
+            this.btnDeleteTable = new System.Windows.Forms.Button();
+            this.btnAddTable = new System.Windows.Forms.Button();
             this.a = new System.Windows.Forms.TabPage();
             this.panel42 = new System.Windows.Forms.Panel();
             this.dtgvSize = new System.Windows.Forms.DataGridView();
@@ -242,22 +258,6 @@
             this.label26 = new System.Windows.Forms.Label();
             this.txbGia = new System.Windows.Forms.TextBox();
             this.dtgvSizeMonAndtgvSizeMonAn = new System.Windows.Forms.DataGridView();
-            this.picFood = new System.Windows.Forms.PictureBox();
-            this.tpTable = new System.Windows.Forms.TabPage();
-            this.panel21 = new System.Windows.Forms.Panel();
-            this.dtgvTable = new System.Windows.Forms.DataGridView();
-            this.panel22 = new System.Windows.Forms.Panel();
-            this.panel23 = new System.Windows.Forms.Panel();
-            this.txbTableName = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.panel24 = new System.Windows.Forms.Panel();
-            this.txbTableId = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.panel25 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.btnShowTable = new System.Windows.Forms.Button();
-            this.btnDeleteTable = new System.Windows.Forms.Button();
-            this.btnAddTable = new System.Windows.Forms.Button();
             this.tabPage1.SuspendLayout();
             this.panel26.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvNV)).BeginInit();
@@ -292,6 +292,7 @@
             this.tpFood.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picFood)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvFood)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel19.SuspendLayout();
@@ -309,6 +310,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dtgvBillDetail)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvBill)).BeginInit();
             this.tcBill.SuspendLayout();
+            this.tpTable.SuspendLayout();
+            this.panel21.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgvTable)).BeginInit();
+            this.panel22.SuspendLayout();
+            this.panel23.SuspendLayout();
+            this.panel24.SuspendLayout();
+            this.panel25.SuspendLayout();
             this.a.SuspendLayout();
             this.panel42.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvSize)).BeginInit();
@@ -345,18 +353,11 @@
             this.panel75.SuspendLayout();
             this.panel76.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvSizeMonAndtgvSizeMonAn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picFood)).BeginInit();
-            this.tpTable.SuspendLayout();
-            this.panel21.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dtgvTable)).BeginInit();
-            this.panel22.SuspendLayout();
-            this.panel23.SuspendLayout();
-            this.panel24.SuspendLayout();
-            this.panel25.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPage1
             // 
+            this.tabPage1.BackColor = System.Drawing.Color.Linen;
             this.tabPage1.Controls.Add(this.panel26);
             this.tabPage1.Controls.Add(this.panel30);
             this.tabPage1.Controls.Add(this.panel33);
@@ -367,7 +368,6 @@
             this.tabPage1.Size = new System.Drawing.Size(1153, 745);
             this.tabPage1.TabIndex = 5;
             this.tabPage1.Text = "Nhân viên";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // panel26
             // 
@@ -380,6 +380,7 @@
             // 
             // dtgvNV
             // 
+            this.dtgvNV.BackgroundColor = System.Drawing.Color.Bisque;
             this.dtgvNV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgvNV.Location = new System.Drawing.Point(3, 0);
             this.dtgvNV.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -391,6 +392,7 @@
             // 
             // panel30
             // 
+            this.panel30.BackColor = System.Drawing.Color.Bisque;
             this.panel30.Controls.Add(this.panel41);
             this.panel30.Controls.Add(this.panel39);
             this.panel30.Controls.Add(this.panel38);
@@ -663,6 +665,7 @@
             // 
             // panel33
             // 
+            this.panel33.BackColor = System.Drawing.Color.Bisque;
             this.panel33.Controls.Add(this.button3);
             this.panel33.Controls.Add(this.button4);
             this.panel33.Controls.Add(this.button5);
@@ -675,50 +678,67 @@
             // 
             // button3
             // 
+            this.button3.BackColor = System.Drawing.Color.Peru;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button3.Location = new System.Drawing.Point(454, 5);
             this.button3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(83, 55);
             this.button3.TabIndex = 4;
             this.button3.Text = "Sửa";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
+            this.button4.BackColor = System.Drawing.Color.Peru;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button4.Location = new System.Drawing.Point(649, 5);
             this.button4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(81, 55);
             this.button4.TabIndex = 3;
             this.button4.Text = "Xem";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
+            this.button5.BackColor = System.Drawing.Color.Peru;
+            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button5.Location = new System.Drawing.Point(306, 5);
             this.button5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(79, 55);
             this.button5.TabIndex = 1;
             this.button5.Text = "Xóa";
-            this.button5.UseVisualStyleBackColor = true;
+            this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
+            this.button6.BackColor = System.Drawing.Color.Peru;
+            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button6.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button6.Location = new System.Drawing.Point(166, 5);
             this.button6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(80, 55);
             this.button6.TabIndex = 0;
             this.button6.Text = "Thêm";
-            this.button6.UseVisualStyleBackColor = true;
+            this.button6.UseVisualStyleBackColor = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // tpAccount
             // 
+            this.tpAccount.BackColor = System.Drawing.Color.Linen;
             this.tpAccount.Controls.Add(this.panel13);
             this.tpAccount.Controls.Add(this.panel16);
             this.tpAccount.Controls.Add(this.panel29);
@@ -729,7 +749,6 @@
             this.tpAccount.Size = new System.Drawing.Size(1153, 745);
             this.tpAccount.TabIndex = 4;
             this.tpAccount.Text = "Tài khoản";
-            this.tpAccount.UseVisualStyleBackColor = true;
             // 
             // panel13
             // 
@@ -742,6 +761,7 @@
             // 
             // dtgvAccount
             // 
+            this.dtgvAccount.BackgroundColor = System.Drawing.Color.Bisque;
             this.dtgvAccount.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgvAccount.Location = new System.Drawing.Point(3, 4);
             this.dtgvAccount.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -753,6 +773,7 @@
             // 
             // panel16
             // 
+            this.panel16.BackColor = System.Drawing.Color.Bisque;
             this.panel16.Controls.Add(this.panel40);
             this.panel16.Controls.Add(this.btnResetPassWord);
             this.panel16.Controls.Add(this.panel20);
@@ -795,13 +816,17 @@
             // 
             // btnResetPassWord
             // 
+            this.btnResetPassWord.BackColor = System.Drawing.Color.Peru;
+            this.btnResetPassWord.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnResetPassWord.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnResetPassWord.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnResetPassWord.Location = new System.Drawing.Point(964, 221);
             this.btnResetPassWord.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnResetPassWord.Name = "btnResetPassWord";
             this.btnResetPassWord.Size = new System.Drawing.Size(132, 62);
             this.btnResetPassWord.TabIndex = 4;
             this.btnResetPassWord.Text = "Đặt lại mật khẩu";
-            this.btnResetPassWord.UseVisualStyleBackColor = true;
+            this.btnResetPassWord.UseVisualStyleBackColor = false;
             this.btnResetPassWord.Click += new System.EventHandler(this.btnResetPassWord_Click);
             // 
             // panel20
@@ -816,7 +841,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(179, 14);
+            this.numericUpDown1.Location = new System.Drawing.Point(183, 14);
             this.numericUpDown1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             1,
@@ -830,6 +855,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.label6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.label6.Location = new System.Drawing.Point(3, 14);
             this.label6.Name = "label6";
@@ -886,7 +912,9 @@
             // label13
             // 
             this.label13.AutoSize = true;
+            this.label13.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.label13.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label13.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label13.Location = new System.Drawing.Point(3, 14);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(176, 29);
@@ -895,6 +923,7 @@
             // 
             // panel29
             // 
+            this.panel29.BackColor = System.Drawing.Color.Bisque;
             this.panel29.Controls.Add(this.btnShowAccount);
             this.panel29.Controls.Add(this.btnEditAccount);
             this.panel29.Controls.Add(this.btnDeleteAccount);
@@ -907,46 +936,62 @@
             // 
             // btnShowAccount
             // 
+            this.btnShowAccount.BackColor = System.Drawing.Color.Peru;
+            this.btnShowAccount.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnShowAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnShowAccount.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnShowAccount.Location = new System.Drawing.Point(430, 4);
             this.btnShowAccount.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnShowAccount.Name = "btnShowAccount";
             this.btnShowAccount.Size = new System.Drawing.Size(91, 50);
             this.btnShowAccount.TabIndex = 3;
             this.btnShowAccount.Text = "Xem";
-            this.btnShowAccount.UseVisualStyleBackColor = true;
+            this.btnShowAccount.UseVisualStyleBackColor = false;
             this.btnShowAccount.Click += new System.EventHandler(this.btnShowAccount_Click);
             // 
             // btnEditAccount
             // 
+            this.btnEditAccount.BackColor = System.Drawing.Color.Peru;
+            this.btnEditAccount.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnEditAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEditAccount.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnEditAccount.Location = new System.Drawing.Point(289, 4);
             this.btnEditAccount.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnEditAccount.Name = "btnEditAccount";
             this.btnEditAccount.Size = new System.Drawing.Size(91, 50);
             this.btnEditAccount.TabIndex = 2;
             this.btnEditAccount.Text = "Sửa";
-            this.btnEditAccount.UseVisualStyleBackColor = true;
+            this.btnEditAccount.UseVisualStyleBackColor = false;
             this.btnEditAccount.Click += new System.EventHandler(this.btnEditAccount_Click);
             // 
             // btnDeleteAccount
             // 
+            this.btnDeleteAccount.BackColor = System.Drawing.Color.Peru;
+            this.btnDeleteAccount.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDeleteAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteAccount.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnDeleteAccount.Location = new System.Drawing.Point(144, 4);
             this.btnDeleteAccount.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnDeleteAccount.Name = "btnDeleteAccount";
             this.btnDeleteAccount.Size = new System.Drawing.Size(91, 50);
             this.btnDeleteAccount.TabIndex = 1;
             this.btnDeleteAccount.Text = "Xóa";
-            this.btnDeleteAccount.UseVisualStyleBackColor = true;
+            this.btnDeleteAccount.UseVisualStyleBackColor = false;
             this.btnDeleteAccount.Click += new System.EventHandler(this.btnDeleteAccount_Click);
             // 
             // btnAddAccount
             // 
+            this.btnAddAccount.BackColor = System.Drawing.Color.Peru;
+            this.btnAddAccount.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnAddAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddAccount.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnAddAccount.Location = new System.Drawing.Point(3, 4);
             this.btnAddAccount.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnAddAccount.Name = "btnAddAccount";
             this.btnAddAccount.Size = new System.Drawing.Size(91, 50);
             this.btnAddAccount.TabIndex = 0;
             this.btnAddAccount.Text = "Thêm";
-            this.btnAddAccount.UseVisualStyleBackColor = true;
+            this.btnAddAccount.UseVisualStyleBackColor = false;
             this.btnAddAccount.Click += new System.EventHandler(this.btnAddAccount_Click);
             // 
             // tbFoodCategory
@@ -1184,6 +1229,17 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1138, 436);
             this.panel4.TabIndex = 1;
+            // 
+            // picFood
+            // 
+            this.picFood.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picFood.Location = new System.Drawing.Point(839, 4);
+            this.picFood.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.picFood.Name = "picFood";
+            this.picFood.Size = new System.Drawing.Size(296, 432);
+            this.picFood.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picFood.TabIndex = 10;
+            this.picFood.TabStop = false;
             // 
             // dtgvFood
             // 
@@ -1547,6 +1603,14 @@
             this.btnViewBill.UseVisualStyleBackColor = false;
             this.btnViewBill.Click += new System.EventHandler(this.btnViewBill_Click);
             // 
+            // dtpkToDate
+            // 
+            this.dtpkToDate.Location = new System.Drawing.Point(891, 8);
+            this.dtpkToDate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtpkToDate.Name = "dtpkToDate";
+            this.dtpkToDate.Size = new System.Drawing.Size(224, 26);
+            this.dtpkToDate.TabIndex = 1;
+            // 
             // dtpkFromDate
             // 
             this.dtpkFromDate.CalendarMonthBackground = System.Drawing.SystemColors.HotTrack;
@@ -1558,6 +1622,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.Bisque;
             this.panel1.Controls.Add(this.dtgvBillDetail);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.lblTotalRevenue);
@@ -1622,14 +1687,6 @@
             this.dtgvBill.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvBill_CellClick);
             this.dtgvBill.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvBill_CellContentClick);
             // 
-            // dtpkToDate
-            // 
-            this.dtpkToDate.Location = new System.Drawing.Point(891, 8);
-            this.dtpkToDate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtpkToDate.Name = "dtpkToDate";
-            this.dtpkToDate.Size = new System.Drawing.Size(224, 26);
-            this.dtpkToDate.TabIndex = 1;
-            // 
             // tcBill
             // 
             this.tcBill.Controls.Add(this.tpBill);
@@ -1649,8 +1706,185 @@
             this.tcBill.Size = new System.Drawing.Size(1161, 778);
             this.tcBill.TabIndex = 0;
             // 
+            // tpTable
+            // 
+            this.tpTable.BackColor = System.Drawing.Color.Bisque;
+            this.tpTable.Controls.Add(this.panel21);
+            this.tpTable.Controls.Add(this.panel22);
+            this.tpTable.Controls.Add(this.panel25);
+            this.tpTable.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.tpTable.Location = new System.Drawing.Point(4, 29);
+            this.tpTable.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tpTable.Name = "tpTable";
+            this.tpTable.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tpTable.Size = new System.Drawing.Size(1153, 745);
+            this.tpTable.TabIndex = 3;
+            this.tpTable.Text = "Bàn ăn";
+            // 
+            // panel21
+            // 
+            this.panel21.Controls.Add(this.dtgvTable);
+            this.panel21.Location = new System.Drawing.Point(7, 95);
+            this.panel21.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panel21.Name = "panel21";
+            this.panel21.Size = new System.Drawing.Size(552, 611);
+            this.panel21.TabIndex = 11;
+            // 
+            // dtgvTable
+            // 
+            this.dtgvTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtgvTable.Location = new System.Drawing.Point(3, 4);
+            this.dtgvTable.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtgvTable.Name = "dtgvTable";
+            this.dtgvTable.RowHeadersWidth = 51;
+            this.dtgvTable.RowTemplate.Height = 24;
+            this.dtgvTable.Size = new System.Drawing.Size(546, 604);
+            this.dtgvTable.TabIndex = 7;
+            this.dtgvTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvTable_CellClick);
+            // 
+            // panel22
+            // 
+            this.panel22.Controls.Add(this.panel23);
+            this.panel22.Controls.Add(this.panel24);
+            this.panel22.Location = new System.Drawing.Point(566, 95);
+            this.panel22.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panel22.Name = "panel22";
+            this.panel22.Size = new System.Drawing.Size(434, 610);
+            this.panel22.TabIndex = 10;
+            this.panel22.Paint += new System.Windows.Forms.PaintEventHandler(this.panel22_Paint);
+            // 
+            // panel23
+            // 
+            this.panel23.Controls.Add(this.txbTableName);
+            this.panel23.Controls.Add(this.label9);
+            this.panel23.Location = new System.Drawing.Point(3, 75);
+            this.panel23.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panel23.Name = "panel23";
+            this.panel23.Size = new System.Drawing.Size(426, 64);
+            this.panel23.TabIndex = 7;
+            // 
+            // txbTableName
+            // 
+            this.txbTableName.Location = new System.Drawing.Point(181, 14);
+            this.txbTableName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txbTableName.Name = "txbTableName";
+            this.txbTableName.Size = new System.Drawing.Size(241, 26);
+            this.txbTableName.TabIndex = 1;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label9.Location = new System.Drawing.Point(3, 14);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(113, 29);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Tên bàn:";
+            // 
+            // panel24
+            // 
+            this.panel24.Controls.Add(this.txbTableId);
+            this.panel24.Controls.Add(this.label10);
+            this.panel24.Location = new System.Drawing.Point(3, 4);
+            this.panel24.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panel24.Name = "panel24";
+            this.panel24.Size = new System.Drawing.Size(426, 64);
+            this.panel24.TabIndex = 6;
+            // 
+            // txbTableId
+            // 
+            this.txbTableId.Location = new System.Drawing.Point(181, 14);
+            this.txbTableId.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txbTableId.Name = "txbTableId";
+            this.txbTableId.ReadOnly = true;
+            this.txbTableId.Size = new System.Drawing.Size(241, 26);
+            this.txbTableId.TabIndex = 1;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label10.Location = new System.Drawing.Point(3, 14);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(44, 29);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "ID:";
+            // 
+            // panel25
+            // 
+            this.panel25.Controls.Add(this.button2);
+            this.panel25.Controls.Add(this.btnShowTable);
+            this.panel25.Controls.Add(this.btnDeleteTable);
+            this.panel25.Controls.Add(this.btnAddTable);
+            this.panel25.Location = new System.Drawing.Point(7, 8);
+            this.panel25.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panel25.Name = "panel25";
+            this.panel25.Size = new System.Drawing.Size(552, 80);
+            this.panel25.TabIndex = 9;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.Peru;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.button2.Location = new System.Drawing.Point(289, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(92, 72);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Sửa";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // btnShowTable
+            // 
+            this.btnShowTable.BackColor = System.Drawing.Color.Peru;
+            this.btnShowTable.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnShowTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnShowTable.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnShowTable.Location = new System.Drawing.Point(430, 4);
+            this.btnShowTable.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnShowTable.Name = "btnShowTable";
+            this.btnShowTable.Size = new System.Drawing.Size(92, 72);
+            this.btnShowTable.TabIndex = 3;
+            this.btnShowTable.Text = "Xem";
+            this.btnShowTable.UseVisualStyleBackColor = false;
+            this.btnShowTable.Click += new System.EventHandler(this.btnShowTable_Click);
+            // 
+            // btnDeleteTable
+            // 
+            this.btnDeleteTable.BackColor = System.Drawing.Color.Peru;
+            this.btnDeleteTable.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDeleteTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteTable.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnDeleteTable.Location = new System.Drawing.Point(147, 4);
+            this.btnDeleteTable.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnDeleteTable.Name = "btnDeleteTable";
+            this.btnDeleteTable.Size = new System.Drawing.Size(92, 72);
+            this.btnDeleteTable.TabIndex = 1;
+            this.btnDeleteTable.Text = "Xóa";
+            this.btnDeleteTable.UseVisualStyleBackColor = false;
+            this.btnDeleteTable.Click += new System.EventHandler(this.btnDeleteTable_Click);
+            // 
+            // btnAddTable
+            // 
+            this.btnAddTable.BackColor = System.Drawing.Color.Peru;
+            this.btnAddTable.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnAddTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddTable.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnAddTable.Location = new System.Drawing.Point(3, 4);
+            this.btnAddTable.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnAddTable.Name = "btnAddTable";
+            this.btnAddTable.Size = new System.Drawing.Size(92, 72);
+            this.btnAddTable.TabIndex = 0;
+            this.btnAddTable.Text = "Thêm";
+            this.btnAddTable.UseVisualStyleBackColor = false;
+            this.btnAddTable.Click += new System.EventHandler(this.btnAddTable_Click);
+            // 
             // a
             // 
+            this.a.BackColor = System.Drawing.Color.Linen;
             this.a.Controls.Add(this.panel42);
             this.a.Controls.Add(this.panel43);
             this.a.Controls.Add(this.panel50);
@@ -1661,7 +1895,6 @@
             this.a.Size = new System.Drawing.Size(1153, 745);
             this.a.TabIndex = 6;
             this.a.Text = "Size món";
-            this.a.UseVisualStyleBackColor = true;
             // 
             // panel42
             // 
@@ -1674,6 +1907,7 @@
             // 
             // dtgvSize
             // 
+            this.dtgvSize.BackgroundColor = System.Drawing.Color.Bisque;
             this.dtgvSize.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgvSize.Location = new System.Drawing.Point(3, 4);
             this.dtgvSize.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -1686,6 +1920,7 @@
             // 
             // panel43
             // 
+            this.panel43.BackColor = System.Drawing.Color.Bisque;
             this.panel43.Controls.Add(this.panel53);
             this.panel43.Controls.Add(this.panel51);
             this.panel43.Controls.Add(this.panel52);
@@ -1818,6 +2053,7 @@
             // 
             // panel50
             // 
+            this.panel50.BackColor = System.Drawing.Color.Bisque;
             this.panel50.Controls.Add(this.button8);
             this.panel50.Controls.Add(this.button13);
             this.panel50.Controls.Add(this.button14);
@@ -1830,50 +2066,67 @@
             // 
             // button8
             // 
+            this.button8.BackColor = System.Drawing.Color.Peru;
+            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button8.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button8.Location = new System.Drawing.Point(430, 4);
             this.button8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(80, 51);
             this.button8.TabIndex = 3;
             this.button8.Text = "Xem";
-            this.button8.UseVisualStyleBackColor = true;
+            this.button8.UseVisualStyleBackColor = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button13
             // 
+            this.button13.BackColor = System.Drawing.Color.Peru;
+            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button13.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button13.Location = new System.Drawing.Point(289, 4);
             this.button13.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(82, 51);
             this.button13.TabIndex = 2;
             this.button13.Text = "Sửa";
-            this.button13.UseVisualStyleBackColor = true;
+            this.button13.UseVisualStyleBackColor = false;
             this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // button14
             // 
+            this.button14.BackColor = System.Drawing.Color.Peru;
+            this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button14.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button14.Location = new System.Drawing.Point(144, 4);
             this.button14.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(83, 51);
             this.button14.TabIndex = 1;
             this.button14.Text = "Xóa";
-            this.button14.UseVisualStyleBackColor = true;
+            this.button14.UseVisualStyleBackColor = false;
             this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // button15
             // 
+            this.button15.BackColor = System.Drawing.Color.Peru;
+            this.button15.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button15.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button15.Location = new System.Drawing.Point(3, 4);
             this.button15.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(83, 51);
             this.button15.TabIndex = 0;
             this.button15.Text = "Thêm";
-            this.button15.UseVisualStyleBackColor = true;
+            this.button15.UseVisualStyleBackColor = false;
             this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
             // tabPage2
             // 
+            this.tabPage2.BackColor = System.Drawing.Color.Linen;
             this.tabPage2.Controls.Add(this.panel48);
             this.tabPage2.Controls.Add(this.panel54);
             this.tabPage2.Controls.Add(this.panel57);
@@ -1884,7 +2137,6 @@
             this.tabPage2.Size = new System.Drawing.Size(1153, 745);
             this.tabPage2.TabIndex = 7;
             this.tabPage2.Text = "Khuyến mãi";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // panel48
             // 
@@ -1897,6 +2149,7 @@
             // 
             // dtgvPromotion
             // 
+            this.dtgvPromotion.BackgroundColor = System.Drawing.Color.Bisque;
             this.dtgvPromotion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgvPromotion.Location = new System.Drawing.Point(3, 4);
             this.dtgvPromotion.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -1909,6 +2162,7 @@
             // 
             // panel54
             // 
+            this.panel54.BackColor = System.Drawing.Color.Bisque;
             this.panel54.Controls.Add(this.panel64);
             this.panel54.Controls.Add(this.panel63);
             this.panel54.Controls.Add(this.panel62);
@@ -2183,6 +2437,7 @@
             // 
             // panel57
             // 
+            this.panel57.BackColor = System.Drawing.Color.Bisque;
             this.panel57.Controls.Add(this.button16);
             this.panel57.Controls.Add(this.button17);
             this.panel57.Controls.Add(this.button18);
@@ -2196,49 +2451,65 @@
             // 
             // button16
             // 
+            this.button16.BackColor = System.Drawing.Color.Peru;
+            this.button16.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button16.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button16.Location = new System.Drawing.Point(737, 4);
             this.button16.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(80, 54);
             this.button16.TabIndex = 3;
             this.button16.Text = "Xem";
-            this.button16.UseVisualStyleBackColor = true;
+            this.button16.UseVisualStyleBackColor = false;
             // 
             // button17
             // 
+            this.button17.BackColor = System.Drawing.Color.Peru;
+            this.button17.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button17.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button17.Location = new System.Drawing.Point(579, 4);
             this.button17.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(80, 54);
             this.button17.TabIndex = 2;
             this.button17.Text = "Sửa";
-            this.button17.UseVisualStyleBackColor = true;
+            this.button17.UseVisualStyleBackColor = false;
             this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
             // button18
             // 
+            this.button18.BackColor = System.Drawing.Color.Peru;
+            this.button18.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button18.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button18.Location = new System.Drawing.Point(462, 4);
             this.button18.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(82, 54);
             this.button18.TabIndex = 1;
             this.button18.Text = "Xóa";
-            this.button18.UseVisualStyleBackColor = true;
+            this.button18.UseVisualStyleBackColor = false;
             this.button18.Click += new System.EventHandler(this.button18_Click);
             // 
             // button19
             // 
+            this.button19.BackColor = System.Drawing.Color.Peru;
+            this.button19.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button19.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button19.Location = new System.Drawing.Point(255, 4);
             this.button19.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(74, 54);
             this.button19.TabIndex = 0;
             this.button19.Text = "Thêm";
-            this.button19.UseVisualStyleBackColor = true;
+            this.button19.UseVisualStyleBackColor = false;
             this.button19.Click += new System.EventHandler(this.button19_Click);
             // 
             // tabPage3
             // 
+            this.tabPage3.BackColor = System.Drawing.Color.Linen;
             this.tabPage3.Controls.Add(this.panel65);
             this.tabPage3.Controls.Add(this.panel66);
             this.tabPage3.Controls.Add(this.panel76);
@@ -2249,7 +2520,6 @@
             this.tabPage3.Size = new System.Drawing.Size(1153, 745);
             this.tabPage3.TabIndex = 8;
             this.tabPage3.Text = "Khách hàng";
-            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // panel65
             // 
@@ -2262,6 +2532,7 @@
             // 
             // dtgvKhachHang
             // 
+            this.dtgvKhachHang.BackgroundColor = System.Drawing.Color.Bisque;
             this.dtgvKhachHang.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgvKhachHang.Location = new System.Drawing.Point(3, 4);
             this.dtgvKhachHang.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -2274,6 +2545,7 @@
             // 
             // panel66
             // 
+            this.panel66.BackColor = System.Drawing.Color.Bisque;
             this.panel66.Controls.Add(this.panel70);
             this.panel66.Controls.Add(this.panel72);
             this.panel66.Controls.Add(this.panel73);
@@ -2437,6 +2709,7 @@
             // 
             // panel76
             // 
+            this.panel76.BackColor = System.Drawing.Color.Bisque;
             this.panel76.Controls.Add(this.button20);
             this.panel76.Controls.Add(this.button21);
             this.panel76.Controls.Add(this.button22);
@@ -2449,45 +2722,60 @@
             // 
             // button20
             // 
+            this.button20.BackColor = System.Drawing.Color.Peru;
+            this.button20.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button20.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button20.Location = new System.Drawing.Point(737, 4);
             this.button20.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(80, 54);
             this.button20.TabIndex = 3;
             this.button20.Text = "Xem";
-            this.button20.UseVisualStyleBackColor = true;
+            this.button20.UseVisualStyleBackColor = false;
             // 
             // button21
             // 
+            this.button21.BackColor = System.Drawing.Color.Peru;
+            this.button21.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button21.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button21.Location = new System.Drawing.Point(579, 4);
             this.button21.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(80, 54);
             this.button21.TabIndex = 2;
             this.button21.Text = "Sửa";
-            this.button21.UseVisualStyleBackColor = true;
+            this.button21.UseVisualStyleBackColor = false;
             this.button21.Click += new System.EventHandler(this.button21_Click);
             // 
             // button22
             // 
+            this.button22.BackColor = System.Drawing.Color.Peru;
+            this.button22.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button22.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button22.Location = new System.Drawing.Point(462, 4);
             this.button22.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(82, 54);
             this.button22.TabIndex = 1;
             this.button22.Text = "Xóa";
-            this.button22.UseVisualStyleBackColor = true;
+            this.button22.UseVisualStyleBackColor = false;
             this.button22.Click += new System.EventHandler(this.button22_Click);
             // 
             // button23
             // 
+            this.button23.BackColor = System.Drawing.Color.Peru;
+            this.button23.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button23.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button23.Location = new System.Drawing.Point(255, 4);
             this.button23.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button23.Name = "button23";
             this.button23.Size = new System.Drawing.Size(74, 54);
             this.button23.TabIndex = 0;
             this.button23.Text = "Thêm";
-            this.button23.UseVisualStyleBackColor = true;
+            this.button23.UseVisualStyleBackColor = false;
             this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
             // button12
@@ -2634,193 +2922,6 @@
             this.dtgvSizeMonAndtgvSizeMonAn.TabIndex = 0;
             this.dtgvSizeMonAndtgvSizeMonAn.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvSizeMonAndtgvSizeMonAn_CellClick);
             // 
-            // picFood
-            // 
-            this.picFood.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picFood.Location = new System.Drawing.Point(839, 4);
-            this.picFood.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.picFood.Name = "picFood";
-            this.picFood.Size = new System.Drawing.Size(296, 432);
-            this.picFood.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picFood.TabIndex = 10;
-            this.picFood.TabStop = false;
-            // 
-            // tpTable
-            // 
-            this.tpTable.BackColor = System.Drawing.Color.Bisque;
-            this.tpTable.Controls.Add(this.panel21);
-            this.tpTable.Controls.Add(this.panel22);
-            this.tpTable.Controls.Add(this.panel25);
-            this.tpTable.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.tpTable.Location = new System.Drawing.Point(4, 29);
-            this.tpTable.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpTable.Name = "tpTable";
-            this.tpTable.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tpTable.Size = new System.Drawing.Size(1153, 745);
-            this.tpTable.TabIndex = 3;
-            this.tpTable.Text = "Bàn ăn";
-            // 
-            // panel21
-            // 
-            this.panel21.Controls.Add(this.dtgvTable);
-            this.panel21.Location = new System.Drawing.Point(7, 95);
-            this.panel21.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(552, 611);
-            this.panel21.TabIndex = 11;
-            // 
-            // dtgvTable
-            // 
-            this.dtgvTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgvTable.Location = new System.Drawing.Point(3, 4);
-            this.dtgvTable.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtgvTable.Name = "dtgvTable";
-            this.dtgvTable.RowHeadersWidth = 51;
-            this.dtgvTable.RowTemplate.Height = 24;
-            this.dtgvTable.Size = new System.Drawing.Size(546, 604);
-            this.dtgvTable.TabIndex = 7;
-            this.dtgvTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvTable_CellClick);
-            // 
-            // panel22
-            // 
-            this.panel22.Controls.Add(this.panel23);
-            this.panel22.Controls.Add(this.panel24);
-            this.panel22.Location = new System.Drawing.Point(566, 95);
-            this.panel22.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.panel22.Name = "panel22";
-            this.panel22.Size = new System.Drawing.Size(434, 610);
-            this.panel22.TabIndex = 10;
-            this.panel22.Paint += new System.Windows.Forms.PaintEventHandler(this.panel22_Paint);
-            // 
-            // panel23
-            // 
-            this.panel23.Controls.Add(this.txbTableName);
-            this.panel23.Controls.Add(this.label9);
-            this.panel23.Location = new System.Drawing.Point(3, 75);
-            this.panel23.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.panel23.Name = "panel23";
-            this.panel23.Size = new System.Drawing.Size(426, 64);
-            this.panel23.TabIndex = 7;
-            // 
-            // txbTableName
-            // 
-            this.txbTableName.Location = new System.Drawing.Point(181, 14);
-            this.txbTableName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txbTableName.Name = "txbTableName";
-            this.txbTableName.Size = new System.Drawing.Size(241, 26);
-            this.txbTableName.TabIndex = 1;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label9.Location = new System.Drawing.Point(3, 14);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(113, 29);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "Tên bàn:";
-            // 
-            // panel24
-            // 
-            this.panel24.Controls.Add(this.txbTableId);
-            this.panel24.Controls.Add(this.label10);
-            this.panel24.Location = new System.Drawing.Point(3, 4);
-            this.panel24.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.panel24.Name = "panel24";
-            this.panel24.Size = new System.Drawing.Size(426, 64);
-            this.panel24.TabIndex = 6;
-            // 
-            // txbTableId
-            // 
-            this.txbTableId.Location = new System.Drawing.Point(181, 14);
-            this.txbTableId.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txbTableId.Name = "txbTableId";
-            this.txbTableId.ReadOnly = true;
-            this.txbTableId.Size = new System.Drawing.Size(241, 26);
-            this.txbTableId.TabIndex = 1;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label10.Location = new System.Drawing.Point(3, 14);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(44, 29);
-            this.label10.TabIndex = 0;
-            this.label10.Text = "ID:";
-            // 
-            // panel25
-            // 
-            this.panel25.Controls.Add(this.button2);
-            this.panel25.Controls.Add(this.btnShowTable);
-            this.panel25.Controls.Add(this.btnDeleteTable);
-            this.panel25.Controls.Add(this.btnAddTable);
-            this.panel25.Location = new System.Drawing.Point(7, 8);
-            this.panel25.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.panel25.Name = "panel25";
-            this.panel25.Size = new System.Drawing.Size(552, 80);
-            this.panel25.TabIndex = 9;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.Peru;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.button2.Location = new System.Drawing.Point(289, 4);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(92, 72);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Sửa";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // btnShowTable
-            // 
-            this.btnShowTable.BackColor = System.Drawing.Color.Peru;
-            this.btnShowTable.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnShowTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShowTable.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnShowTable.Location = new System.Drawing.Point(430, 4);
-            this.btnShowTable.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnShowTable.Name = "btnShowTable";
-            this.btnShowTable.Size = new System.Drawing.Size(92, 72);
-            this.btnShowTable.TabIndex = 3;
-            this.btnShowTable.Text = "Xem";
-            this.btnShowTable.UseVisualStyleBackColor = false;
-            this.btnShowTable.Click += new System.EventHandler(this.btnShowTable_Click);
-            // 
-            // btnDeleteTable
-            // 
-            this.btnDeleteTable.BackColor = System.Drawing.Color.Peru;
-            this.btnDeleteTable.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDeleteTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteTable.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnDeleteTable.Location = new System.Drawing.Point(147, 4);
-            this.btnDeleteTable.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnDeleteTable.Name = "btnDeleteTable";
-            this.btnDeleteTable.Size = new System.Drawing.Size(92, 72);
-            this.btnDeleteTable.TabIndex = 1;
-            this.btnDeleteTable.Text = "Xóa";
-            this.btnDeleteTable.UseVisualStyleBackColor = false;
-            this.btnDeleteTable.Click += new System.EventHandler(this.btnDeleteTable_Click);
-            // 
-            // btnAddTable
-            // 
-            this.btnAddTable.BackColor = System.Drawing.Color.Peru;
-            this.btnAddTable.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnAddTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddTable.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnAddTable.Location = new System.Drawing.Point(3, 4);
-            this.btnAddTable.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnAddTable.Name = "btnAddTable";
-            this.btnAddTable.Size = new System.Drawing.Size(92, 72);
-            this.btnAddTable.TabIndex = 0;
-            this.btnAddTable.Text = "Thêm";
-            this.btnAddTable.UseVisualStyleBackColor = false;
-            this.btnAddTable.Click += new System.EventHandler(this.btnAddTable_Click);
-            // 
             // fAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -2883,6 +2984,7 @@
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.panel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picFood)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvFood)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
@@ -2907,6 +3009,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.dtgvBillDetail)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvBill)).EndInit();
             this.tcBill.ResumeLayout(false);
+            this.tpTable.ResumeLayout(false);
+            this.panel21.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dtgvTable)).EndInit();
+            this.panel22.ResumeLayout(false);
+            this.panel23.ResumeLayout(false);
+            this.panel23.PerformLayout();
+            this.panel24.ResumeLayout(false);
+            this.panel24.PerformLayout();
+            this.panel25.ResumeLayout(false);
             this.a.ResumeLayout(false);
             this.panel42.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtgvSize)).EndInit();
@@ -2961,16 +3072,6 @@
             this.panel75.PerformLayout();
             this.panel76.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtgvSizeMonAndtgvSizeMonAn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picFood)).EndInit();
-            this.tpTable.ResumeLayout(false);
-            this.panel21.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dtgvTable)).EndInit();
-            this.panel22.ResumeLayout(false);
-            this.panel23.ResumeLayout(false);
-            this.panel23.PerformLayout();
-            this.panel24.ResumeLayout(false);
-            this.panel24.PerformLayout();
-            this.panel25.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
