@@ -992,5 +992,10 @@ namespace QuanLyQuanCafe
         {
 
         }
+
+        private void fTableManager_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
